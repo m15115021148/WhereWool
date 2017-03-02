@@ -1,0 +1,264 @@
+package com.sitemap.na2ne.activities;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.application.MyApplication;
+import com.sitemap.na2ne.config.WebUrlConfig;
+import com.sitemap.na2ne.http.XUtilsHelper;
+import com.sitemap.na2ne.models.CodeModel;
+import com.sitemap.na2ne.models.MoneyModel;
+import com.sitemap.na2ne.models.PackageModel;
+import com.sitemap.na2ne.models.TipLableModel;
+import com.sitemap.na2ne.models.UserFriendModel;
+import com.sitemap.na2ne.utils.CommonToast;
+import com.sitemap.na2ne.views.MyProgressDialog;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.utils.Log;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+/**
+ * com.sitemap.na2ne.activities.AddFriendPhoneActivity
+ * @author zhang
+ * create at 2016年3月24日 下午4:52:43
+ */
+public class AddFriendNameActivity extends Activity implements
+OnClickListener{
+	private static AddFriendNameActivity context;//本类
+	private LinearLayout base_back_lay;//返回键
+	private TextView back;//回退
+	private EditText name_name;//联系人名称
+	private TextView name_next;//下一步
+	private TextView name_phone;//联系人电话
+	private String selectType="";//选择的类型
+	private String numberType="1";//手机号类型
+	private String phonenum="";//手机号
+	private static MyProgressDialog progressDialog;//进度条
+	private XUtilsHelper httpUtil = null;//网络请求帮助类对象
+	private final int ZERO=0,ONE=1,TWO=2,THREE=3,FOUR=4;//0/1/2/3/4/5/7/8/11数字
+	public  List<PackageModel> buyPackage = new ArrayList<PackageModel>();// 购买套餐
+	private String packageName;//套餐名称
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_addfriend_name);
+		context = this;
+		progressDialog = MyProgressDialog.createDialog(this);
+		initview();
+	}
+	
+	private final  Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			if (progressDialog != null && progressDialog.isShowing()) {
+				progressDialog.dismiss();// 关闭进度条
+			}
+			if (msg.what == TWO) {
+				// 获得余额
+				if (msg.arg1 == TWO) {
+					MyApplication.moneyModel=JSON.parseObject(msg.obj.toString(), MoneyModel.class);
+					if (MyApplication.moneyModel!=null) {
+					}else{
+						CommonToast.showShortToastMessage(context, "突然找不到数据了，再给次机会吧>_<");
+					}
+
+				}
+				//添加好友
+				if (msg.arg1==THREE) {
+					int  status = -1;
+					CodeModel cm=JSON.parseObject(msg.obj.toString(), CodeModel.class);
+					if (cm!=null) {
+						status=cm.getStatus();
+						switch (status) {
+						case ZERO:
+							CommonToast.showShortToastMessage(context, "确认短信已发出，请耐心等待！");
+							if (MyApplication.getNetObject().isNetConnected()) {
+								httpUtil = new XUtilsHelper(WebUrlConfig.requestMoney(MyApplication.userModel.getUserID()), handler);
+								httpUtil.sendGet(TWO);
+							} else {
+							}
+							if (MyApplication.getNetObject().isNetConnected()) {
+								httpUtil = new XUtilsHelper(
+										WebUrlConfig.getFriendList(MyApplication.userModel
+												.getUserID()), handler);
+								httpUtil.sendGet(FOUR);
+							} else {
+							}
+							break;
+						case ONE:
+							CommonToast.showShortToastMessage(context, "提交申请失败，失败原因："+cm.getErrorMessage());
+							break;
+						case TWO:
+							CommonToast.showShortToastMessage(context, "服务器异常！");
+							break;
+						default:
+							break;
+						}
+					}
+				}
+				if (msg.arg1==FOUR) {
+					if (MyApplication.luserFriend.size() > 0) {
+						MyApplication.luserFriend.clear();
+					}
+						try {
+						MyApplication.luserFriend = JSONObject.parseArray(msg.obj.toString(), UserFriendModel.class);
+						finish();
+						} catch (Exception e) {
+						}
+						AddFriendPhoneActivity.context.finish();
+						AddFriendPackageActivity.context.finish();
+					finish();
+				}
+				
+
+			} else if (msg.what == ONE) {
+				if (msg.arg1==THREE) {
+					CommonToast.showShortToastMessage(context, "结果待确认，请稍后在【被定位号码管理】页面中查看审核结果！");
+					AddFriendPhoneActivity.context.finish();
+					AddFriendPackageActivity.context.finish();
+				finish();
+				}else {
+					CommonToast.showShortToastMessage(context, "服务器繁忙，请稍后重试");
+				}
+				
+				// 获取数据异常
+			} else if (msg.what == ZERO) {
+				// 返回数据为null
+				if (msg.arg1 == ONE) {
+					CommonToast.showShortToastMessage(context, "服务器异常！");
+				}
+				if (msg.arg1 == TWO) {
+					CommonToast.showShortToastMessage(context, "服务器异常！");
+				}
+			}
+		}
+
+	};
+	
+	/**
+	 * 初始化控件
+	 */
+	private void initview() {
+		back=(TextView)findViewById(R.id.back_tv);
+		back.setOnClickListener(this);
+		name_next=(TextView)findViewById(R.id.name_next);
+		name_phone=(TextView)findViewById(R.id.name_phone);
+		name_name=(EditText)findViewById(R.id.name_name);
+		name_name.setOnClickListener(this);
+		name_next.setOnClickListener(this);
+		base_back_lay=(LinearLayout)findViewById(R.id.base_back_lay);
+		base_back_lay.setOnClickListener(this);
+		phonenum=getIntent().getStringExtra("phonenum");
+		name_phone.setText(phonenum);
+		numberType=getIntent().getStringExtra("numberType");
+		selectType=getIntent().getStringExtra("selectType");
+		packageName = getIntent().getStringExtra("packageName");
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v==base_back_lay) {
+			finish();
+		}
+		if (v==back) {
+			finish();
+		}
+		if (v==name_next) {
+			if (name_name.getText().toString().trim().equals("")||name_name.getText().toString().trim()==null) {
+				CommonToast.showShortToastMessage(context,
+						"请设置显示名称！");
+				return;
+			}
+			
+			AlertDialog.Builder customDia = new AlertDialog.Builder(context);
+			customDia.setCancelable(false);
+			final View viewDia = LayoutInflater.from(context).inflate(R.layout.add_frien_dialog_item, null);
+			TextView tv1 = (TextView) viewDia.findViewById(R.id.tv_1);			
+			String str1 = "请确认以下信息是否正确：\n"
+					+ "①、您所定位的电话号码为：\n"+
+					"\t\t\t"+phonenum+"\n"+
+					"②、联系人名称为："+name_name.getText().toString()+"\n"+
+					"③、套餐收费为："+packageName+"\n";
+			List<TipLableModel> msg4 = JSON.parseArray(getIntent().getStringExtra("msg4"), TipLableModel.class);
+			String lable = "";//颜色的字体
+			String txt = "";//所有的字
+			Log.e("result",JSON.toJSONString(msg4));
+			for (int i = 0; i < msg4.size(); i++) {
+				if(i==msg4.size()-1){
+					lable = lable +  msg4.get(i).getLabel();
+					txt = txt + msg4.get(i).getTxt();
+					break;
+				}
+				if(!msg4.get(i).getLabel().equals("")){
+					lable = lable +  msg4.get(i).getLabel() + ";";
+				}						
+				txt = txt + msg4.get(i).getTxt() + ";";
+			}
+			String result = str1 + txt;
+			MyApplication.setTextColor(tv1, result.replace(";", "\n"), lable);
+			
+			customDia.setView(viewDia);
+			customDia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if (MyApplication.getNetObject().isNetConnected()) {
+						progressDialog.setMessage("提交申请中...");
+						progressDialog.show();
+						httpUtil = new XUtilsHelper(WebUrlConfig.addFriend(MyApplication.userModel.getUserID(), 
+								phonenum, name_name.getText().toString().trim(), 
+								selectType, "",numberType), 
+								handler);
+						httpUtil.sendGet(THREE);
+					} else {
+						CommonToast.showShortToastMessage(AddFriendNameActivity.this, "网络无法连接！");
+					}
+					dialog.dismiss();
+				}
+			});
+			customDia.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			customDia.create().show();
+		
+		}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		// 友盟统计
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	public void onPause() {
+		super.onPause();
+		// 友盟统计
+		MobclickAgent.onPause(this);
+	}
+
+}

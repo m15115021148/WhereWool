@@ -1,0 +1,94 @@
+package com.sitemap.na2ne.activities;
+
+import java.util.List;
+
+import com.alibaba.fastjson.JSON;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.adapters.MessageListViewAdapter;
+import com.sitemap.na2ne.models.MessageModel;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
+/**
+ * @author chenmeng
+ *	消息列表页面
+ */
+public class MessageListActivity extends Activity implements OnClickListener{
+	/**本类*/ 
+	private MessageListActivity mContext;
+	/**listview*/ 
+	private ListView mLv;
+	/**返回上一层*/ 
+	private LinearLayout mBack;
+	/**消息数据*/ 
+	private List<MessageModel> mList = null;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);		
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_message_list);
+		mContext = this;
+		initView();
+		initData();
+	}
+
+	/**
+	 * 初始化view
+	 */
+	private void initView() {
+		mBack = (LinearLayout) findViewById(R.id.base_back_lay);
+		mLv = (ListView) findViewById(R.id.msg_listview);
+	}
+
+	/**
+	 * 初始化数据
+	 */
+	private void initData() {
+		mBack.setOnClickListener(this);
+		
+		String result = getIntent().getStringExtra("MessageModel");
+		mList = JSON.parseArray(result,MessageModel.class);
+		if(mList!=null){
+			initListView();
+		}		
+	}
+	
+	/**
+	 * 初始化listview
+	 */
+	private void initListView(){
+		MessageListViewAdapter mAdapter = new MessageListViewAdapter(mContext,mList);
+		mLv.setAdapter(mAdapter);
+		mLv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(mContext,WebViewActivity.class);
+				intent.putExtra("type", 1);
+				intent.putExtra("msgUrl", mList.get(position).getContent());
+				startActivity(intent);
+			}
+		});
+	}
+
+	@Override
+	public void onClick(View v) {
+		if(v == mBack){
+			onBackPressed();
+			finish();
+		}
+	}
+
+}

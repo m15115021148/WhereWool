@@ -1,0 +1,45 @@
+package com.sitemap.na2ne.http;
+
+import com.lidroid.xutils.HttpUtils;
+
+/**
+ * 
+ * @ClassName: XutilsHttpClient.java
+ * @Description: HttpUtils配置类，配置其全局的一些属性；单例模式获取HttpUtils对象
+ * @author chenhao
+ * @Date 2015-11-14
+ */
+
+public class XutilsHttpClient {
+
+	private static HttpUtils httpUtils;
+	private static final int TIMEOUT = 20;// 时间单位都为：秒
+	private static final int SOTIMEOUT = 15;
+	private static final String CHARSET = "UTF-8";
+	private static final int POOLSIZE = 3;
+
+	/**
+	 * 单例模式获取httpUtils实例对象 (HttpUtils使用了线程池的理念，相当于获取单例HttpUtil)
+	 * 
+	 * @return HttpUtils对象实例
+	 */
+	public static HttpUtils getInstence() {
+		if (httpUtils == null) {
+			httpUtils = new HttpUtils();
+			// 请求超时
+			httpUtils.configSoTimeout(1000 * SOTIMEOUT);
+			// 从连接池中取连接的超时时间及 连接超时(两者在这个框架中相同)
+			httpUtils.configTimeout(1000 * TIMEOUT);
+			// 设置线程池大小
+			httpUtils.configRequestThreadPoolSize(POOLSIZE);
+			// 字符编码
+			httpUtils.configResponseTextCharset(CHARSET);
+			// 设置缓存
+			httpUtils.configHttpCacheSize(-1);
+			// 设置失败重连次数
+			httpUtils.configRequestRetryCount(0);
+		}
+		return httpUtils;
+	}
+
+}

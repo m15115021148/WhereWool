@@ -1,0 +1,86 @@
+package com.sitemap.na2ne.adapters;
+
+import java.util.List;
+
+import com.lidroid.xutils.BitmapUtils;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.models.MessageModel;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+/** 
+ * com.sitemap.na2ne.adapters
+ * @author chenmeng
+ * @Description 消息页面 适配器
+ * @date create at  2016年6月28日 上午9:21:53
+ */
+public class MessageListViewAdapter extends BaseAdapter{
+	private Context mContext;	
+	private List<MessageModel> mList;
+	private Holder holder;
+	
+	public MessageListViewAdapter(Context context,List<MessageModel> list){
+		this.mContext = context;
+		this.mList = list;
+	}
+	
+	@Override
+	public int getCount() {
+		return mList.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return mList.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		if(convertView==null){
+			convertView = LayoutInflater.from(mContext).inflate(R.layout.activity_message_listview_item, null);
+			holder = new Holder();
+			holder.msgImg = (ImageView) convertView.findViewById(R.id.msg_img);
+			holder.msgPoint = (ImageView) convertView.findViewById(R.id.user_point);
+			holder.msgTitle = (TextView) convertView.findViewById(R.id.msg_title);
+			holder.msgContent = (TextView) convertView.findViewById(R.id.msg_content);
+			convertView.setTag(holder);
+		}else{
+			holder = (Holder) convertView.getTag();
+		}
+		MessageModel model = mList.get(position);
+		
+		//加载图片
+		if(!model.getImg().equals("")&&model.getImg()!=null){
+			BitmapUtils utils = new BitmapUtils(mContext);
+			utils.display(holder.msgImg, model.getImg());
+		}else{
+			
+		}
+		holder.msgTitle.setText(model.getTitle());
+		holder.msgContent.setText(model.getBrief());
+		if(model.getIsRead().equals("1")){// 是否已读（1：是，2否）
+			holder.msgPoint.setVisibility(View.GONE);
+		}else{
+			holder.msgPoint.setVisibility(View.VISIBLE);
+		}
+		
+		return convertView;
+	}
+	
+	private class Holder{
+		ImageView msgImg,msgPoint;//图片 红点
+		TextView msgTitle,msgContent;//标题  内容
+	}
+
+}

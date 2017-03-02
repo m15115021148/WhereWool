@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 定位记录列表 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/user_login_bottom_color"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:background="@color/white"
+        android:padding="@dimen/_15px_in720p" >
+
+        <LinearLayout
+            android:id="@+id/base_back_lay"
+            android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/back_tv"
+                android:layout_width="@dimen/_32px_in720p"
+                android:layout_height="@dimen/_32px_in720p"
+                android:layout_marginLeft="@dimen/_10px_in720p"
+                android:background="@drawable/my_03" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/location_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/location_list_title"
+            android:textColor="@color/ghei"
+            android:textSize="@dimen/_36px_in720p" />
+    </RelativeLayout>
+<!--  
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100px_in720p"
+        android:background="@color/user_xian"
+        android:gravity="center" >
+
+        <EditText
+            android:id="@+id/location_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70px_in720p"
+            android:layout_margin="@dimen/_20px_in720p"
+            android:background="#ffffff"
+            android:hint="@string/location_list_edit"
+            android:paddingLeft="@dimen/_10px_in720p"
+            android:paddingRight="1px" />
+    </LinearLayout>
+-->
+    <ListView
+        android:id="@+id/location_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/_20px_in720p" >
+    </ListView>
+
+</LinearLayout>

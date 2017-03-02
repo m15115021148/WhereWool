@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 添加好友名称页面 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/huia"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:background="@color/lan"
+        android:padding="@dimen/_15px_in720p" >
+
+        <LinearLayout
+            android:id="@+id/base_back_lay"
+            android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/back_tv"
+                android:layout_width="@dimen/_20px_in720p"
+                android:layout_height="@dimen/_30px_in720p"
+                android:layout_marginLeft="@dimen/_10px_in720p"
+                android:background="@drawable/back_index" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="添加显示名称"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_36px_in720p" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_30px_in720p"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请设置"
+            android:textColor="#777777" />
+
+        <TextView
+            android:id="@+id/name_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12312345678"
+            android:textColor="@color/lan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="的显示名称"
+            android:textColor="#777777" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/name_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_30px_in720p"
+        android:background="@drawable/bg_white"
+        android:gravity="center_vertical"
+        android:hint="请输入显示名称（最多5个字）"
+        android:singleLine="true"
+        android:maxLength="5"
+        android:paddingLeft="@dimen/_10px_in720p"
+        android:paddingRight="@dimen/_10px_in720p"
+        android:text=""
+        android:textColor="#777777"
+        android:textSize="@dimen/_30px_in720p" />
+
+    <TextView
+        android:id="@+id/name_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_60px_in720p"
+        android:background="@drawable/bg_blue"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_35px_in720p" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/name_tishi1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_60px_in720p"
+        android:lineSpacingExtra="@dimen/_15px_in720p"
+        android:text="1.移动/联通用户，由于运营商网络限制问题，如果对方开启了4G网络，将无法获得对方的实时位置。如需定位，请确保对方关闭4G网络；"
+        android:textColor="#777777"
+        android:textSize="@dimen/_28px_in720p" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/name_tishi2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_60px_in720p"
+        android:lineSpacingExtra="@dimen/_15px_in720p"
+        android:text="2.被定位的移动用户每月会收到一条定位短信提示；"
+        android:textColor="#777777"
+        android:textSize="@dimen/_28px_in720p" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/name_tishi3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_60px_in720p"
+        android:lineSpacingExtra="@dimen/_15px_in720p"
+        android:text="注：因技术原因，定位信息可能会存在偏差，属于正常现象。"
+        android:textColor="#777777"
+        android:textSize="@dimen/_28px_in720p" />
+
+</LinearLayout>

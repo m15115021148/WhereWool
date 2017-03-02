@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 充值页面 -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:background="@color/user_login_bottom_color"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80px_in720p"
+            android:background="@color/lan"
+            android:padding="@dimen/_15px_in720p" >
+
+               <LinearLayout
+            android:id="@+id/base_back_lay"
+            android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/back_tv"
+                android:layout_width="@dimen/_20px_in720p"
+                android:layout_height="@dimen/_30px_in720p"
+                android:layout_marginLeft="@dimen/_10px_in720p"
+                android:background="@drawable/back_index" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/recharge_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_36px_in720p" />
+
+            <TextView
+                android:id="@+id/recharge_old"
+                android:layout_width="@dimen/_40px_in720p"
+                android:layout_height="@dimen/_40px_in720p"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/_20px_in720p"
+                android:background="@drawable/recharge_old"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2px_in720p"
+        android:layout_marginBottom="@dimen/_10px_in720p"
+        android:background="@color/user_login_bottom_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_140px_in720p"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/recharge_img"
+                android:layout_width="@dimen/_88px_in720p"
+                android:layout_height="@dimen/_88px_in720p"
+                android:layout_marginLeft="@dimen/_20px_in720p"
+                android:background="@drawable/user_head"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_140px_in720p"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_70px_in720p"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+<TextView
+                android:id="@+id/recharge_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_20px_in720p"
+                android:text="索博"
+                android:textColor="@color/lan"
+                android:textSize="@dimen/_36px_in720p" />
+
+                    <ImageView
+                        android:id="@+id/recharge_img1"
+                        android:layout_width="@dimen/_30px_in720p"
+                        android:layout_height="@dimen/_30px_in720p"
+                        android:layout_marginLeft="@dimen/_20px_in720p"
+                        android:src="@drawable/user_phone"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/recharge_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="15788817811"
+                        android:textColor="#333333"
+                    android:textSize="@dimen/_24px_in720p" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20px_in720p"
+                        android:text="账户余额："
+                        android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p" />
+
+                    <TextView
+                        android:id="@+id/recharge_yue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20px_in720p"
+                        android:text="3333元"
+                        android:textColor="@color/lan"
+                         android:textSize="@dimen/_30px_in720p" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_20px_in720p"
+            android:background="@color/user_login_bottom_color"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60px_in720p"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/_20px_in720p"
+            android:paddingRight="1px"
+            android:text="@string/recharge_jine"
+            android:textColor="#777777"
+              android:textSize="@dimen/_30px_in720p" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/recharge_10"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_70px_in720p"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/recharge_jine_bg2"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:focusable="true"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p"
+                android:text="20 元" />
+
+            <TextView
+                android:id="@+id/recharge_30"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_70px_in720p"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/recharge_jine_bg1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p"
+                android:text="50 元" />
+
+            <TextView
+                android:id="@+id/recharge_50"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_70px_in720p"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/recharge_jine_bg1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p"
+                android:text="100 元" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/recharge_100"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_70px_in720p"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/recharge_jine_bg1"
+                android:clickable="true"
+                android:gravity="center"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p"
+                android:onClick="onClick"
+                android:text="150 元" />
+
+            <TextView
+                android:id="@+id/recharge_150"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_70px_in720p"
+                android:layout_margin="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/recharge_jine_bg1"
+                android:clickable="true"
+                android:gravity="center"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p"
+                android:onClick="onClick"
+                android:text="200 元" />
+
+            <TextView
+                android:id="@+id/recharge_200"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_70px_in720p"
+                android:layout_margin="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/recharge_jine_bg1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p"
+                android:text="300 元" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/recharge_300"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_70px_in720p"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/recharge_jine_bg1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p"
+                android:text="400 元" />
+
+            <TextView
+                android:id="@+id/recharge_500"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_70px_in720p"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/recharge_jine_bg1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p"
+                android:text="500 元" />
+
+            <EditText
+                android:id="@+id/recharge_other"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_70px_in720p"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/recharge_jine_bg1"
+                android:gravity="center"
+                android:hint="其他金额"
+                android:inputType="number"
+                android:singleLine="true"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="6dp" >
+
+            <TextView
+                android:id="@+id/pay_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_32px_in720p"
+                android:layout_marginLeft="@dimen/_20px_in720p"
+                android:gravity="center_vertical"
+                android:text="支付方式"
+                 android:textColor="#777777"
+                    android:textSize="@dimen/_30px_in720p" />
+
+            <TextView
+                android:id="@+id/pay_ali"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pay_type"
+                android:layout_marginLeft="@dimen/_80px_in720p"
+                android:clickable="true"
+                android:drawablePadding="3dp"
+                android:drawableTop="@drawable/alipay"
+                android:gravity="center"
+                android:onClick="setPayType"
+                android:text="支付宝"
+                android:textColor="@color/lan"
+                android:textSize="@dimen/_32px_in720p" />
+
+            <TextView
+                android:id="@+id/pay_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pay_type"
+                android:layout_marginLeft="@dimen/_60px_in720p"
+                android:layout_toRightOf="@id/pay_ali"
+                android:clickable="true"
+                android:drawablePadding="3dp"
+                android:drawableTop="@drawable/wechat"
+                android:gravity="center"
+                android:onClick="setPayType"
+                android:text="微信"
+                android:textSize="@dimen/_32px_in720p" />
+
+            <TextView
+                android:id="@+id/yuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/pay_ali"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_30px_in720p"
+                android:text=" 元"
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p" />
+
+            <TextView
+                android:id="@+id/money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/yuan"
+                android:layout_below="@id/pay_ali"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_20px_in720p"
+                android:layout_toLeftOf="@id/yuan"
+                android:text="20"
+                android:textColor="@color/lan"
+                    android:textSize="@dimen/_30px_in720p"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/yuan"
+                android:layout_below="@id/pay_ali"
+                android:layout_toLeftOf="@id/money"
+                android:text="支付金额："
+                 android:textColor="#333333"
+                    android:textSize="@dimen/_30px_in720p"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/user_login_bottom_color"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/pay"
+                android:layout_width="@dimen/_606px_in720p"
+                android:layout_height="@dimen/_80px_in720p"
+                android:layout_marginTop="@dimen/_60px_in720p"
+                android:background="@drawable/recharge_sub"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="立即充值"
+                android:textColor="#ffffff"
+                android:layout_marginBottom="20dp"
+                android:textSize="@dimen/_32px_in720p" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 追踪对话框 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_600px_in720p"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/index_tm"
+     >
+   <RelativeLayout 
+       android:layout_width="match_parent"
+        android:layout_height="@dimen/_100px_in720p"
+        >
+        <TextView 
+           
+             android:layout_width="wrap_content"
+        android:layout_height="@dimen/_100px_in720p"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:text="历史记录"
+        android:textSize="@dimen/_32px_in720p"
+            />
+         <TextView 
+              android:id="@+id/tozhuizong"
+             android:layout_width="wrap_content"
+        android:layout_height="@dimen/_100px_in720p"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/_26px_in720p"
+        android:layout_marginRight="@dimen/_20px_in720p"
+        android:textColor="@color/lan"
+        android:text="追踪定位"
+            />
+        </RelativeLayout>
+        
+   <View 
+           android:layout_width="match_parent"
+        android:layout_height="@dimen/_2px_in720p"
+        android:background="@color/gbei"
+       />
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+   	<LinearLayout 
+   	    android:layout_width="match_parent"
+   	    android:layout_height="wrap_content"
+   	    android:layout_marginTop="@dimen/_40px_in720p"
+   	    android:orientation="vertical"
+   	    
+   	    >
+   	    <TextView 
+   	        android:layout_width="match_parent"
+   	        android:layout_height="wrap_content"
+   	        android:text="选择开始日期"
+   	        android:layout_marginLeft="@dimen/_60px_in720p"
+   	        android:textSize="@dimen/_30px_in720p"
+        android:textColor="#333333"
+   	        />
+
+   	    <EditText
+   	        android:id="@+id/startDate"
+   	        android:layout_width="match_parent"
+   	        android:layout_height="@dimen/_72px_in720p"
+   	        android:layout_marginTop="@dimen/_20px_in720p"
+   	        android:background="@drawable/kk_31"
+   	        android:padding="5dp"
+   	         android:layout_marginLeft="@dimen/_60px_in720p"
+   	         android:layout_marginRight="@dimen/_60px_in720p"
+   	        android:hint="@string/index_popup_defuat_startdate"
+   	        android:textSize="@dimen/_30px_in720p"
+        android:textColor="#333333" />
+   	    
+   	</LinearLayout>
+   	
+   	 	<LinearLayout 
+   	    android:layout_width="match_parent"
+   	    android:layout_height="wrap_content"
+   	     android:layout_marginTop="@dimen/_20px_in720p"
+   	    android:orientation="vertical"
+   	    >
+   	    <TextView 
+   	        android:layout_width="match_parent"
+   	        android:layout_height="wrap_content"
+   	        android:text="选择结束日期"
+   	         android:layout_marginLeft="@dimen/_60px_in720p"
+   	        android:textSize="@dimen/_30px_in720p"
+        android:textColor="#333333"
+   	        />
+   	    <EditText 
+   	        android:id="@+id/endDate"
+   	        android:layout_width="match_parent"
+   	        android:layout_height="@dimen/_72px_in720p"
+   	        android:background="@drawable/kk_31"
+   	        android:padding="5dp"
+   	        android:layout_marginTop="@dimen/_20px_in720p"
+   	        android:layout_marginLeft="@dimen/_60px_in720p"
+   	         android:layout_marginRight="@dimen/_60px_in720p"
+   	        android:hint="@string/index_popup_defuat_enddate"
+   	       android:textSize="@dimen/_30px_in720p"
+        android:textColor="#333333"
+   	        />
+   	    
+   	</LinearLayout>
+   	<!--  
+   	  	<LinearLayout 
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_marginTop="10dp"
+   	    >
+   	    <TextView 
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:text="@string/index_popup_guiji_starttime"
+   	        android:textSize="@dimen/login_font_14"
+   	        android:layout_marginRight="10dp"
+   	        />
+
+   	    <EditText
+   	        android:id="@+id/startTime"
+   	        android:layout_width="180dp"
+   	        android:layout_height="30dp"
+   	        android:background="@drawable/index_border_shape"
+   	        android:padding="5dp"
+   	        android:textColor="@color/user_login_edit_font_color"
+   	        android:hint="@string/index_popup_defuat_starttime"
+   	        android:textSize="@dimen/login_font_14" />
+   	    
+   	</LinearLayout>
+   	
+   	 	<LinearLayout 
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_marginTop="10dp"
+   	    >
+   	    <TextView 
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:text="@string/index_popup_guiji_endtime"
+   	        android:textSize="@dimen/login_font_14"
+   	        android:layout_marginRight="10dp"
+   	        />
+   	    <EditText 
+   	        android:id="@+id/endTime"
+   	        android:layout_width="180dp"
+   	        android:layout_height="30dp"
+   	        android:background="@drawable/index_border_shape"
+   	        android:textColor="@color/user_login_edit_font_color"
+   	        android:padding="5dp"
+   	        android:hint="@string/index_popup_defuat_endtime"
+   	        android:textSize="@dimen/login_font_14"
+   	        />
+   	    
+   	</LinearLayout>
+   	-->
+   </LinearLayout>
+      <View 
+           android:layout_width="match_parent"
+        android:layout_height="@dimen/_2px_in720p"
+        android:background="@color/gbei"
+        android:layout_marginTop="@dimen/_40px_in720p"
+       />
+      <LinearLayout 
+            android:layout_width="match_parent"
+         android:layout_height="@dimen/_100px_in720p"
+        android:gravity="center"
+          >
+            <TextView 
+        android:id="@+id/guiji"
+        android:layout_width="@dimen/_180px_in720p"
+        android:layout_height="@dimen/_64px_in720p"
+        android:background="@drawable/btn_31"
+        android:text="历史查询"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:textSize="@dimen/_26px_in720p"
+        android:layout_gravity="center_vertical"
+        />
+      </LinearLayout>
+ 
+
+</LinearLayout>

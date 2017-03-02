@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="circleBgView">
+        <!-- 属性中的值都必须是小写 -->
+        <attr name="text" format="reference|string"></attr>
+        <attr name="textSize" format="dimension"></attr>
+        <attr name="textColor" format="reference|color"></attr>
+        <attr name="background" format="reference|color"></attr>
+    </declare-styleable>
+
+</resources>

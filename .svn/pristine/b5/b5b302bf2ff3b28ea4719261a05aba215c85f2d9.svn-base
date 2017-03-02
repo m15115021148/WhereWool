@@ -1,0 +1,389 @@
+package com.sitemap.na2ne.activities;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.adapters.BillListviewAdapter;
+import com.sitemap.na2ne.adapters.LocationDetailedListviewAdapter;
+import com.sitemap.na2ne.adapters.RechargeOldListviewAdapter;
+import com.sitemap.na2ne.application.MyApplication;
+import com.sitemap.na2ne.config.WebUrlConfig;
+import com.sitemap.na2ne.http.XUtilsHelper;
+import com.sitemap.na2ne.models.BillModel;
+import com.sitemap.na2ne.models.CodeModel;
+import com.sitemap.na2ne.models.FriendInfoModel;
+import com.sitemap.na2ne.models.ListModel;
+import com.sitemap.na2ne.models.LocationInfoModel;
+import com.sitemap.na2ne.models.MoneyModel;
+import com.sitemap.na2ne.models.PayModel;
+import com.sitemap.na2ne.models.UserFriendModel;
+import com.sitemap.na2ne.utils.CommonToast;
+import com.sitemap.na2ne.views.LinkManPopuWindow;
+import com.sitemap.na2ne.views.MyProgressDialog;
+import com.umeng.analytics.MobclickAgent;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+/**
+ * 好友详情页面
+ * com.sitemap.na2ne.activities.FriendInfoActivity
+ * @author zhang
+ * create at 2016年3月23日 下午2:09:18
+ */
+public class FriendInfoActivity extends Activity implements 
+		OnClickListener {
+	private static FriendInfoActivity context;//本类
+	private LinearLayout base_back_lay;//返回键
+	private TextView back;//回退
+	private static MyProgressDialog progressDialog;// 进度条
+	private XUtilsHelper httpUtil = null;// 网络请求帮助类对象
+	private TextView user_phone_tv;//用户电话
+	private TextView now_taocan;//当前套餐
+	private TextView end_time;//结束时间
+	private TextView next_taocan;//下次套餐
+	private TextView user_name_tv;//用户名字
+	private TextView delete;//删除按钮
+	private TextView user_name_change_tv;//修改备注
+	private int position=-1;//好友下标
+	private final int ZERO=0,ONE=1,TWO=2,THREE=3,FOUR=4,FIVE=5,SIX=6;//0.1.2.3.4.5.6
+	private FriendInfoModel friendInfo;//好友套餐信息
+	private boolean isdel=false;//是否删除
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+//		// 隐藏android系统的状态栏
+//		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_friend_info);
+		progressDialog = MyProgressDialog.createDialog(this);
+		context = this;
+		initview();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		// 友盟统计
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	public void onPause() {
+		super.onPause();
+		// 友盟统计
+		MobclickAgent.onPause(this);
+	}
+	
+	private  Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			if (progressDialog != null && progressDialog.isShowing()) {
+				progressDialog.dismiss();// 关闭进度条
+			}
+			if (msg.what == TWO) {
+				// 获得好友套餐信息
+				if (msg.arg1 ==TWO) {
+					Log.i("TAG", msg.obj.toString());
+					if (msg.obj.toString()!=null) {
+						friendInfo = JSON.parseObject(msg.obj.toString(),
+								FriendInfoModel.class);
+						if (friendInfo!=null) {
+							end_time.setText(friendInfo.getPackageEndTime());
+							next_taocan.setText(friendInfo.getNextPackageName());
+						}
+					}
+
+				}
+				// 修改昵称
+				else if (msg.arg1 ==THREE) {
+						Log.i("TAG", msg.obj.toString());
+						try {
+							org.json.JSONObject jo = new org.json.JSONObject(
+									msg.obj.toString());
+							final int status = jo.getInt("status");
+							if (status == 1) {
+								CommonToast.showShortToastMessage(context, "修改成功！");
+
+									httpUtil = new XUtilsHelper(
+											WebUrlConfig.getFriendList(MyApplication.userModel
+													.getUserID()), handler);
+									httpUtil.sendGet(FOUR);
+							} else if (status == 2) {
+								CommonToast.showShortToastMessage(context,
+										"用户名不存在！");
+							} else if (status == 3) {
+								CommonToast
+										.showShortToastMessage(context, "服务器异常！");
+							}
+						} catch (org.json.JSONException e) {
+							e.printStackTrace();
+						}
+						if (progressDialog != null && progressDialog.isShowing()) {
+							progressDialog.dismiss();// 关闭进度条
+						}
+
+					}
+				// 获取联系人列表
+				else if (msg.arg1 == FOUR) {
+						MyApplication.luserFriend.clear();
+						try {
+							MyApplication.luserFriend = JSONObject.parseArray(
+									msg.obj.toString(), UserFriendModel.class);
+						} catch (Exception e) {
+						}
+						if (isdel) {
+							finish();
+						}
+					if (progressDialog != null && progressDialog.isShowing()) {
+						progressDialog.dismiss();// 关闭进度条
+					}
+				}
+				//删除好友
+				else if(msg.arg1==FIVE) {
+					int  status = -1;
+					CodeModel cm=JSON.parseObject(msg.obj.toString(), CodeModel.class);
+					if (cm!=null) {
+						status=cm.getStatus();
+						switch (status) {
+						case ZERO:
+							isdel=true;
+								httpUtil = new XUtilsHelper(WebUrlConfig.requestMoney(MyApplication.userModel.getUserID()), handler);
+								httpUtil.sendGet(SIX);
+							CommonToast.showShortToastMessage(context, "删除定位号码成功！");
+								httpUtil = new XUtilsHelper(
+										WebUrlConfig.getFriendList(MyApplication.userModel
+												.getUserID()), handler);
+								httpUtil.sendGet(FOUR);
+							break;
+						case ONE:
+							CommonToast.showShortToastMessage(context, "删除定位号码失败，失败原因："+cm.getErrorMessage());
+							break;
+						case TWO:
+							CommonToast.showShortToastMessage(context, "服务器异常！");
+							break;
+						default:
+							break;
+						}
+					}
+				}
+				//活动余额
+				else if (msg.arg1 == SIX) {
+					MyApplication.moneyModel=JSON.parseObject(msg.obj.toString(), MoneyModel.class);
+
+				}
+
+			} else if (msg.what ==ONE) {
+				CommonToast.showShortToastMessage(context, "突然找不到数据了，再给次机会吧>_<");
+				// 获取数据异常
+			} else if (msg.what == ZERO) {
+				// 返回数据为null
+				if (msg.arg1 == ONE) {
+					CommonToast.showShortToastMessage(context, "服务器异常！");
+				}
+				if (msg.arg1 == TWO) {
+					CommonToast.showShortToastMessage(context, "服务器异常！");
+				}
+
+		}
+		}
+	};
+	
+
+	/**
+	 * 初始化控件
+	 */
+	private void initview() {
+		back=(TextView)findViewById(R.id.back_tv);
+		back.setOnClickListener(this);
+		base_back_lay=(LinearLayout)findViewById(R.id.base_back_lay);
+		base_back_lay.setOnClickListener(this);
+		user_phone_tv=(TextView)findViewById(R.id.user_phone_tv);
+		
+		user_name_tv=(TextView)findViewById(R.id.user_name_tv);
+		
+		now_taocan=(TextView)findViewById(R.id.now_taocan);
+		end_time=(TextView)findViewById(R.id.end_time);
+		next_taocan=(TextView)findViewById(R.id.next_taocan);
+		delete=(TextView)findViewById(R.id.delete);
+		delete.setOnClickListener(this);
+		user_name_change_tv=(TextView)findViewById(R.id.user_name_change_tv);
+		user_name_change_tv.setOnClickListener(this);
+		position=getIntent().getIntExtra("position", -1);
+		if (position!=-1) {
+			user_name_tv.setText(MyApplication.luserFriend.get(position).getFriendName());
+			user_phone_tv.setText(MyApplication.luserFriend.get(position).getFriendPhone());
+			now_taocan.setText(MyApplication.luserFriend.get(position).getPackageName());
+			if (!MyApplication.luserFriend.get(position).getPackageType().equals("1")||MyApplication.luserFriend.get(position).getIsAgree().equals("0")) {
+				end_time.setText("无");
+				next_taocan.setText("无");
+			}else {
+					
+					httpUtil = new XUtilsHelper(
+							WebUrlConfig.getFriendInfo(MyApplication.luserFriend.get(position).getFriendID()), handler);
+					httpUtil.sendGet(TWO);
+			}
+		}
+		
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v==base_back_lay) {
+			finish();
+		}
+		if (v==back) {
+			finish();
+		}
+		if (v==user_name_change_tv) {
+			AlertDialog.Builder customDia = new AlertDialog.Builder(
+					FriendInfoActivity.this);
+			final View viewDia = LayoutInflater.from(FriendInfoActivity.this)
+					.inflate(R.layout.alertdialog_edittext, null);
+			TextView oldName = (TextView) viewDia
+					.findViewById(R.id.old_name);
+			oldName.setText(MyApplication.luserFriend.get(position)
+					.getFriendName());
+			customDia.setView(viewDia);
+			customDia.setPositiveButton("确定",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog,
+								int which) {
+							EditText diaInput = (EditText) viewDia
+									.findViewById(R.id.change_name_ed);
+
+							if (diaInput.getText().toString().trim()
+									.equals("")
+									|| diaInput.getText().toString().trim() == null) {
+								CommonToast.showShortToastMessage(context,
+										"修改的名字不能为空！");
+							} else {
+								user_name_tv.setText(diaInput
+										.getText().toString().trim());
+
+								if (MyApplication.getNetObject()
+										.isNetConnected()) {
+									if (progressDialog != null && !progressDialog.isShowing()) {
+										progressDialog = MyProgressDialog
+												.createDialog(context);
+										progressDialog
+										.setMessage("正在修改定位号码备注...");
+								progressDialog.show();
+									}
+									
+									
+									httpUtil = new XUtilsHelper(
+											WebUrlConfig
+													.updateName(
+															MyApplication.luserFriend
+																	.get(position)
+																	.getFriendID(),
+															diaInput.getText()
+																	.toString()
+																	.trim()),
+											handler);
+									httpUtil.sendGet(THREE);
+								} else {
+									CommonToast.showShortToastMessage(
+											context, "网络无法连接！");
+								}
+							}
+						}
+					});
+			customDia.setNegativeButton("取消",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int which) {
+							dialog.dismiss();
+						}
+					});
+			customDia.create().show();
+		}
+		if (v==delete) {
+			showNormalDia();
+		}
+	}
+	
+	
+	/**
+	 * 对话框
+	 */
+	private void showNormalDia() {
+		AlertDialog.Builder normalDia = new AlertDialog.Builder(
+				FriendInfoActivity.this);
+		normalDia.setTitle("提示");
+		normalDia.setMessage("是否要删除定位号码？（删除定位号码后将不能再对其进行定位，如需定位则要重新添加定位号码）");
+
+		normalDia.setPositiveButton("确定",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if (MyApplication.getNetObject()
+								.isNetConnected()) {
+							if (progressDialog != null && !progressDialog.isShowing()) {
+								progressDialog = MyProgressDialog
+										.createDialog(context);
+								progressDialog
+								.setMessage("正在删除定位号码...");
+						progressDialog.show();
+							}
+							
+							
+							httpUtil = new XUtilsHelper(
+									WebUrlConfig
+											.deleteFriend(MyApplication.userModel.getUserID(), MyApplication.luserFriend
+													.get(position)
+													.getFriendID()),
+									handler);
+							httpUtil.sendGet(FIVE);
+						} else {
+							CommonToast.showShortToastMessage(
+									context, "网络无法连接！");
+						}
+					}
+				});
+		normalDia.setNegativeButton("取消",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		normalDia.create().show();
+	}
+}

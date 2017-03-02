@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 优惠套餐dialog样式 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_500px_in720p"
+    android:layout_height="@dimen/_600px_in720p"
+    android:background="@drawable/packagebg"
+    android:orientation="vertical" >
+<LinearLayout 
+    android:layout_width="match_parent"
+        android:layout_height="@dimen/_60px_in720p"
+        android:gravity="right|center_vertical"
+    >
+    <TextView 
+        android:id="@+id/change_close"
+           android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5px_in720p"
+        android:layout_marginRight="@dimen/_15px_in720p"
+        android:background="@drawable/change_x"
+        />
+</LinearLayout>
+<!-- 
+    <RadioGroup
+        android:id="@+id/change_rg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_340px_in720p"
+        android:gravity="center" >
+
+
+            <RadioButton
+                android:id="@+id/discount_50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                 android:textSize="@dimen/_30px_in720p"
+                 android:layout_marginRight="@dimen/_20px_in720p"
+                 android:textColor="#000000"
+                 android:text="50次/45元" />
+
+
+            <RadioButton
+                android:id="@+id/discount_100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 android:layout_marginTop="@dimen/_30px_in720p"
+                 android:layout_marginRight="@dimen/_20px_in720p"
+                android:textSize="@dimen/_30px_in720p"
+                android:textColor="#000000"
+                 android:text="100次/80元"  />
+
+
+
+    </RadioGroup>
+     -->
+    <ListView 
+        android:id="@+id/package_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_340px_in720p"
+        android:gravity="center"
+        android:divider="@null" 
+        ></ListView>
+<LinearLayout 
+    android:layout_width="match_parent"
+        android:layout_height="@dimen/_200px_in720p"
+        android:gravity="center"
+    >
+    <TextView 
+        android:id="@+id/discount_sub"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60px_in720p"
+        android:layout_marginLeft="@dimen/_50px_in720p"
+        android:layout_marginRight="@dimen/_50px_in720p"
+        android:background="@drawable/recharge_sub"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_30px_in720p"
+        android:text="订    购"
+        />
+</LinearLayout>
+</LinearLayout>

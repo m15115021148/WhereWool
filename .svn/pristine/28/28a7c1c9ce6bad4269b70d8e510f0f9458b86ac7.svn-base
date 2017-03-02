@@ -1,0 +1,329 @@
+package com.sitemap.na2ne.activities;
+
+
+import java.util.List;
+
+import com.alibaba.fastjson.JSON;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.application.MyApplication;
+import com.sitemap.na2ne.config.RequestCode;
+import com.sitemap.na2ne.config.WebUrlConfig;
+import com.sitemap.na2ne.http.HttpUtil;
+import com.sitemap.na2ne.models.MessageModel;
+import com.sitemap.na2ne.models.MoneyModel;
+import com.sitemap.na2ne.models.ShareModel;
+import com.sitemap.na2ne.models.UserModel;
+import com.sitemap.na2ne.share.UMShareUtil;
+import com.sitemap.na2ne.utils.ToastUtil;
+import com.sitemap.na2ne.utils.SystemManagerUtil;
+import com.sitemap.na2ne.views.MyProgressDialog;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMShareAPI;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+/**
+ * 
+ * @ClassName: UserActivity.java
+ * @Description: 个人中心界面
+ * @author chenhao
+ * @Date 2015-11-14
+ */
+
+public class UserActivity extends Activity implements OnClickListener {
+	// 回退按钮，姓名，电话，余额，充值，消费记录，系统设置，清除缓存，退出软件
+	private TextView userBack, userName, userPhone, userYuE, userSystem
+			;
+	// 充值按钮，消费记录按钮，清除缓存按钮，定位记录，设置页面，联系人管理，退款记录
+	private RelativeLayout userChongZhi, userXFJL, userClear,
+			user_location_lay, user_set_lay, user_friend_lay,user_tkjl_lay,user_chongzhijilu_lay;
+	private RelativeLayout  user_share;//友盟分享
+	public static UserActivity context;// 本类
+	private LinearLayout base_back_lay;// 返回键
+
+	private static MyProgressDialog progressDialog;// 进度条
+	private HttpUtil http = null;//网络请求帮助类对象
+	
+	private final int SHARE_TAG=101;//分享tag
+	/**消息按钮*/ 
+//	private RelativeLayout mMessage;
+	/**消息 红色圈*/ 
+//	private ImageView mPoint;
+	private static final int LOGIN = 0x001;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activivty_user);
+		// 侵透式状态栏
+		SystemManagerUtil.setSystemManager(this);
+		context = this;
+		if(http == null){
+			http = new HttpUtil(handler);
+		}
+		initview();
+
+		if (MyApplication.getNetObject().isNetConnected()) {
+			if (progressDialog == null ||!progressDialog.isShowing()) {
+				progressDialog=MyProgressDialog.createDialog(this);
+				progressDialog.setMessage("正在查询余额...");
+				progressDialog.show();
+			}
+			String url = 
+					WebUrlConfig.requestMoney(MyApplication.userModel
+							.getUserID());
+			http.sendGet(2,url);
+		} else {
+			ToastUtil.showCenterShort(this, RequestCode.NONETWORK);
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		// 友盟统计
+		MobclickAgent.onPause(this);
+	}
+
+	private final Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			if (progressDialog != null && progressDialog.isShowing()) {
+				progressDialog.dismiss();// 关闭进度条
+			}
+			switch (msg.what) {
+			case HttpUtil.SUCCESS:
+				// 获得余额
+				if (msg.arg1 == 2) {
+					// System.out.println(msg.obj.toString());
+					MyApplication.moneyModel = JSON.parseObject(
+							msg.obj.toString(), MoneyModel.class);
+					if (MyApplication.moneyModel != null) {
+						userYuE.setText(MyApplication.moneyModel.getBalance());
+					} else {
+						ToastUtil.showCenterShort(context,
+								"服务器异常,获取余额失败！");
+					}
+
+				}
+				// 获得分享信息
+				if (msg.arg1 == SHARE_TAG) {
+					
+					ShareModel model=null;
+					try {
+						model = JSON.parseObject(msg.obj.toString(), ShareModel.class);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					if(model!=null&&!model.getShareUrl().equals("")){
+//						打开友盟分享
+						UMShareUtil shareUtil=new UMShareUtil(UserActivity.this);
+						shareUtil.shareNetImage(model.getShareTitle(), model.getShareinfo(),model.getShareImgUrl() ,model.getShareUrl());
+					}else{
+						ToastUtil.showCenterShort(UserActivity.this, RequestCode.NULL);
+					}
+				}
+				//自动登录(刷新数据)
+				if(msg.arg1 == LOGIN){
+					MyApplication.userModel = JSON.parseObject(msg.obj.toString(), UserModel.class);
+//					if(MyApplication.userModel.getIsHasMsg()==2){
+//						mPoint.setVisibility(View.VISIBLE);
+//					}else{
+//						mPoint.setVisibility(View.GONE);
+//					}
+				}
+				break;
+			case HttpUtil.EMPTY:
+				// 返回数据为null
+				if (msg.arg1 == 1) {
+					ToastUtil.showCenterShort(context, "服务器异常,获取余额失败！");
+				}
+				if (msg.arg1 == 2) {
+					ToastUtil.showCenterShort(context, "服务器异常,获取余额失败！");
+				}			
+				break;
+			case HttpUtil.FAILURE:
+				ToastUtil.showCenterShort(context, RequestCode.ERRORINFO);
+				break;
+			case HttpUtil.LOADING:
+				
+				break;
+			default:
+				break;
+		}
+		
+		}
+
+	};
+
+	/**
+	 * 初始化控件
+	 */
+	private void initview() {
+		userBack = (TextView) findViewById(R.id.user_back_tv);
+		userBack.setOnClickListener(this);
+		userName = (TextView) findViewById(R.id.user_name_tv);
+		userName.setOnClickListener(this);
+		userPhone = (TextView) findViewById(R.id.user_phone_tv);
+		userPhone.setOnClickListener(this);
+		userYuE = (TextView) findViewById(R.id.user_yue_tv);
+		userYuE.setOnClickListener(this);
+		user_share=(RelativeLayout) findViewById(R.id.user_share);
+		user_share.setOnClickListener(this);
+		userChongZhi = (RelativeLayout) findViewById(R.id.user_chongzhi_lay);
+		userChongZhi.setOnClickListener(this);
+		userXFJL = (RelativeLayout) findViewById(R.id.user_xfjl_lay);
+		userXFJL.setOnClickListener(this);
+		userSystem = (TextView) findViewById(R.id.user_system_tv);
+		userSystem.setOnClickListener(this);
+//		userClear = (RelativeLayout) findViewById(R.id.user_clear_lay);
+//		userClear.setOnClickListener(this);
+		user_location_lay = (RelativeLayout) findViewById(R.id.user_location_lay);
+		user_location_lay.setOnClickListener(this);
+		user_friend_lay = (RelativeLayout) findViewById(R.id.user_friend_lay);
+		user_friend_lay.setOnClickListener(this);
+		user_set_lay = (RelativeLayout) findViewById(R.id.user_set_lay);
+		user_set_lay.setOnClickListener(this);
+		user_tkjl_lay = (RelativeLayout) findViewById(R.id.user_tkjl_lay);
+		user_tkjl_lay.setOnClickListener(this);
+		user_chongzhijilu_lay= (RelativeLayout) findViewById(R.id.user_chongzhijilu_lay);
+		user_chongzhijilu_lay.setOnClickListener(this);
+
+		base_back_lay = (LinearLayout) findViewById(R.id.base_back_lay);
+		base_back_lay.setOnClickListener(this);
+//		bug点
+		userName.setText(MyApplication.userModel.getRealName());
+		userPhone.setText(MyApplication.userModel.getPhoneNumber());
+		
+//		mPoint = (ImageView) findViewById(R.id.user_point);
+//		mMessage = (RelativeLayout) findViewById(R.id.user_message);
+//		mMessage.setOnClickListener(this);
+	}
+
+	/**
+	 * 点击事件
+	 */
+	@Override
+	public void onClick(View v) {
+		if (v == user_location_lay) {
+			Intent intent = new Intent(UserActivity.this,
+					LocationFriendListActivity.class);
+			context.startActivity(intent);
+		}
+		if (v == base_back_lay) {
+			finish();
+		}
+		if (v == userBack) {
+			finish();
+		}
+		if (v == userChongZhi) {
+			Intent intent = new Intent(UserActivity.this,
+					RechargeActivity.class);
+			context.startActivity(intent);
+		}
+		if (v == userXFJL) {
+			Intent intent = new Intent(UserActivity.this,
+					BillListActivity.class);
+			context.startActivity(intent);
+		}
+		if (v==user_chongzhijilu_lay) {
+			Intent intent = new Intent(UserActivity.this,
+					RechargeOldListActivity.class);
+			startActivity(intent);
+		}
+		
+//		if (v == userClear) {
+//			new Handler().postDelayed(new Runnable() {
+//
+//				@Override
+//				public void run() {
+//					ToastUtil.showCenterShort(context, "清除缓存成功！");
+//				}
+//			}, 1000);
+//		}
+		if (v == userSystem) {
+			Intent intent = new Intent(UserActivity.this, SetActivity.class);
+			context.startActivity(intent);
+		}
+		if (v == user_set_lay) {
+			Intent intent = new Intent(UserActivity.this, SetActivity.class);
+			context.startActivity(intent);
+		}
+		if (v == user_friend_lay) {
+			Intent intent = new Intent(UserActivity.this,
+					FriendListActivity.class);
+			context.startActivity(intent);
+		}
+		if (v == user_tkjl_lay) {
+			Intent intent = new Intent(UserActivity.this,
+					RefundOldListActivity.class);
+			context.startActivity(intent);
+		}
+		if (v == user_share) {
+			getShareContent();
+		}
+		
+	}
+	
+	/**
+	 * 从后台获取分享数据
+	 */
+	private void getShareContent(){
+		if (MyApplication.getNetObject().isNetConnected()) {
+		
+			http.sendGet(SHARE_TAG,WebUrlConfig.getShareinfo());
+		} else {
+			ToastUtil.showCenterShort(this, RequestCode.NONETWORK);
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		SharedPreferences preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+		if (preferences.getString("pwd", "") != null
+				&& !preferences.getString("pwd", "").equals("")) {	
+			if(MyApplication.getNetObject().isNetConnected()){
+				String url = WebUrlConfig.login(
+						preferences.getString("username", ""),
+						preferences.getString("pwd", ""));
+				http.sendGet(LOGIN,url);	
+			}else {
+				ToastUtil.showCenterShort(this, RequestCode.NONETWORK);
+			}
+						
+		}		
+		// 友盟统计
+		MobclickAgent.onResume(this);
+		if (MyApplication.moneyModel != null) {
+			if (MyApplication.moneyModel.getBalance() != null) {
+				userYuE.setText(MyApplication.moneyModel.getBalance());				
+			}
+		}
+		super.onResume();
+	}
+	
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        友盟分享回调
+        UMShareAPI.get( this ).onActivityResult( requestCode, resultCode, data);
+    }
+
+}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 定位记录明细列表 每一列样式-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/location_detailed_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20px_in720p"
+            android:layout_marginLeft="@dimen/_30px_in720p"
+            android:gravity="center_vertical"
+            android:text="2015-12-12 12:12:12"
+             android:textColor="#cccccc"
+                            android:textSize="@dimen/_24px_in720p" />
+
+        <TextView
+            android:id="@+id/location_detailed_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20px_in720p"
+            android:layout_marginLeft="@dimen/_30px_in720p"
+            android:layout_marginBottom="@dimen/_20px_in720p"
+            android:gravity="center_vertical"
+             android:textColor="#333333"
+                            android:textSize="@dimen/_30px_in720p"
+            android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/location_detailed_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/lan"
+                            android:textSize="@dimen/_30px_in720p"
+            android:text="成功" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,31 @@
+package com.sitemap.na2ne.models;
+
+/**
+ * com.sitemap.na2ne.models.SystemInfo
+ * @author zhang
+ * create at 2016年3月24日 下午1:15:22
+ */
+public class SystemInfo {
+	private String notiTitile;//     公告标题
+	private String notiUrl;//       外联H5网页
+	private String isOpen;//       是否打开（0：打开，1：关闭）
+	public String getNotiTitile() {
+		return notiTitile;
+	}
+	public void setNotiTitile(String notiTitile) {
+		this.notiTitile = notiTitile;
+	}
+	public String getNotiUrl() {
+		return notiUrl;
+	}
+	public void setNotiUrl(String notiUrl) {
+		this.notiUrl = notiUrl;
+	}
+	public String getIsOpen() {
+		return isOpen;
+	}
+	public void setIsOpen(String isOpen) {
+		this.isOpen = isOpen;
+	}
+	
+}

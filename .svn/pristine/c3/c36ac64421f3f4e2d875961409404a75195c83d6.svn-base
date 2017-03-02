@@ -1,0 +1,9 @@
+package com.sitemap.na2ne.share;
+
+import com.umeng.socialize.media.WBShareCallBackActivity;
+
+/**
+ * ÐÂÀËÎ¢²©»Øµ÷
+ */
+public class WBShareActivity extends WBShareCallBackActivity{
+}

@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 用户资料布局 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/user_login_bottom_color"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:background="@color/lan"
+        >
+
+        <LinearLayout
+            android:padding="@dimen/_15px_in720p" 
+            android:id="@+id/base_back_lay"
+            android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/user_back_tv"
+                android:layout_width="@dimen/_20px_in720p"
+                android:layout_height="@dimen/_30px_in720p"
+                android:layout_marginLeft="@dimen/_10px_in720p"
+                android:background="@drawable/back_index" />
+        </LinearLayout>
+
+        <TextView
+            android:padding="@dimen/_15px_in720p" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/pager_user_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_36px_in720p" />
+
+        <RelativeLayout
+            android:id="@+id/user_message"
+            android:layout_width="@dimen/_100px_in720p"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true" >
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/user_msg"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="@dimen/_45px_in720p"
+                android:layout_height="@dimen/_45px_in720p"
+                android:layout_marginRight="@dimen/_10px_in720p"
+                android:src="@drawable/user_message" />
+            
+            <ImageView
+                android:visibility="gone"
+                android:layout_alignTop="@+id/user_msg"
+                android:layout_alignRight="@+id/user_msg"
+                android:id="@+id/user_point"
+                android:layout_width="@dimen/_18px_in720p"
+                android:layout_height="@dimen/_18px_in720p"
+                android:src="@drawable/user_message_point" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2px_in720p"
+        android:layout_marginBottom="@dimen/_10px_in720p"
+        android:background="@color/user_login_bottom_color" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_140px_in720p"
+        android:background="@color/white" >
+
+        <ImageView
+            android:id="@+id/user_head"
+            android:layout_width="@dimen/_88px_in720p"
+            android:layout_height="@dimen/_88px_in720p"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_20px_in720p"
+            android:background="@drawable/user_head"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_20px_in720p"
+            android:layout_toRightOf="@id/user_head"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/user_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5px_in720p"
+                android:layout_marginLeft="@dimen/_20px_in720p"
+                android:text="索博"
+                android:textColor="@color/lan"
+                android:textSize="@dimen/_36px_in720p" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5px_in720p"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="@dimen/_30px_in720p"
+                    android:layout_height="@dimen/_30px_in720p"
+                    android:layout_marginLeft="@dimen/_20px_in720p"
+                    android:layout_marginRight="@dimen/_10px_in720p"
+                    android:background="@drawable/user_phone" />
+
+                <TextView
+                    android:id="@+id/user_phone_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="15787856897"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/_24px_in720p" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="@dimen/_20px_in720p"
+        android:background="@color/user_login_bottom_color" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0000"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100px_in720p"
+                android:background="@color/white" >
+
+                <TextView
+                    android:id="@+id/user_yue_img"
+                    android:layout_width="@dimen/_40px_in720p"
+                    android:layout_height="@dimen/_40px_in720p"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20px_in720p"
+                    android:layout_marginRight="@dimen/_20px_in720p"
+                    android:background="@drawable/user_yue" />
+
+                <TextView
+                    android:id="@+id/yue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_yue_img"
+                    android:gravity="center_vertical"
+                    android:text="@string/user_yue"
+                    android:textSize="@dimen/_32px_in720p" />
+
+                <TextView
+                    android:id="@+id/user_yue_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/yue"
+                    android:text="0"
+                    android:textColor="@color/lan"
+                    android:textSize="@dimen/_32px_in720p" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_yue_tv"
+                    android:text="元"
+                    android:textColor="@color/lan"
+                    android:textSize="@dimen/_32px_in720p" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/user_xian" />
+
+            <RelativeLayout
+                android:id="@+id/user_chongzhi_lay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100px_in720p"
+                android:background="@color/white" >
+
+                <TextView
+                    android:id="@+id/user_chongzhi_img"
+                    android:layout_width="@dimen/_40px_in720p"
+                    android:layout_height="@dimen/_40px_in720p"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20px_in720p"
+                    android:layout_marginRight="@dimen/_20px_in720p"
+                    android:background="@drawable/user_chongzhi" />
+
+                <TextView
+                    android:id="@+id/user_chongzhi_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_chongzhi_img"
+                    android:gravity="center_vertical"
+                    android:text="@string/user_chongzhi"
+                    android:textSize="@dimen/_32px_in720p" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/back_xym"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/user_xian" />
+
+            <RelativeLayout
+                android:id="@+id/user_xfjl_lay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100px_in720p"
+                android:background="@color/white" >
+
+                <TextView
+                    android:id="@+id/user_xfjl_img"
+                    android:layout_width="@dimen/_40px_in720p"
+                    android:layout_height="@dimen/_40px_in720p"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20px_in720p"
+                    android:layout_marginRight="@dimen/_20px_in720p"
+                    android:background="@drawable/user_xfjl" />
+
+                <TextView
+                    android:id="@+id/user_xfjl_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_xfjl_img"
+                    android:gravity="center_vertical"
+                    android:text="@string/user_xfjl"
+                    android:textSize="@dimen/_32px_in720p" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/back_xym"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/user_xian" />
+
+            <RelativeLayout
+                android:id="@+id/user_tkjl_lay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100px_in720p"
+                android:background="@color/white" >
+
+                <TextView
+                    android:id="@+id/user_tkjl_img"
+                    android:layout_width="@dimen/_40px_in720p"
+                    android:layout_height="@dimen/_40px_in720p"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20px_in720p"
+                    android:layout_marginRight="@dimen/_20px_in720p"
+                    android:background="@drawable/user_tkjl" />
+
+                <TextView
+                    android:id="@+id/user_tkjl_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_tkjl_img"
+                    android:gravity="center_vertical"
+                    android:text="退款记录"
+                    android:textSize="@dimen/_32px_in720p" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/back_xym"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="@dimen/_20px_in720p"
+                android:background="@color/user_login_bottom_color" />
+
+            <RelativeLayout
+                android:id="@+id/user_friend_lay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100px_in720p"
+                android:background="@color/white" >
+
+                <TextView
+                    android:id="@+id/user_lxr_img"
+                    android:layout_width="@dimen/_40px_in720p"
+                    android:layout_height="@dimen/_40px_in720p"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20px_in720p"
+                    android:layout_marginRight="@dimen/_20px_in720p"
+                    android:background="@drawable/user_lxr" />
+
+                <TextView
+                    android:id="@+id/user_lxr_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_lxr_img"
+                    android:gravity="center_vertical"
+                    android:text="被定位号码管理"
+                    android:textSize="@dimen/_32px_in720p" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/back_xym"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/user_xian" />
+
+            <RelativeLayout
+                android:id="@+id/user_location_lay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100px_in720p"
+                android:background="@color/white" >
+
+                <TextView
+                    android:id="@+id/user_dwjl_img"
+                    android:layout_width="@dimen/_40px_in720p"
+                    android:layout_height="@dimen/_40px_in720p"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20px_in720p"
+                    android:layout_marginRight="@dimen/_20px_in720p"
+                    android:background="@drawable/user_dwjl" />
+
+                <TextView
+                    android:id="@+id/user_dwjl_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_dwjl_img"
+                    android:gravity="center_vertical"
+                    android:text="@string/user_dwjl"
+                    android:textSize="@dimen/_32px_in720p" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/back_xym"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="@dimen/_20px_in720p"
+                android:background="@color/user_login_bottom_color" />
+
+            <RelativeLayout
+                android:id="@+id/user_share"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100px_in720p"
+                android:background="@color/white" >
+
+                <TextView
+                    android:id="@+id/user_share_img"
+                    android:layout_width="@dimen/_40px_in720p"
+                    android:layout_height="@dimen/_40px_in720p"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20px_in720p"
+                    android:layout_marginRight="@dimen/_20px_in720p"
+                    android:background="@drawable/share" />
+
+                <TextView
+                    android:id="@+id/user_share_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_share_img"
+                    android:gravity="center_vertical"
+                    android:text="@string/user_share"
+                    android:textSize="@dimen/_32px_in720p" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/back_xym"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/user_xian" />
+
+            <RelativeLayout
+                android:id="@+id/user_set_lay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100px_in720p"
+                android:background="@color/white" >
+
+                <TextView
+                    android:id="@+id/user_system_img"
+                    android:layout_width="@dimen/_40px_in720p"
+                    android:layout_height="@dimen/_40px_in720p"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20px_in720p"
+                    android:layout_marginRight="@dimen/_20px_in720p"
+                    android:background="@drawable/user_xtsz" />
+
+                <TextView
+                    android:id="@+id/user_system_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_system_img"
+                    android:gravity="center_vertical"
+                    android:text="@string/user_xtsz"
+                    android:textSize="@dimen/_32px_in720p" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/back_xym"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 添加好友套餐选择页面 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/huia"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:background="@color/lan"
+        android:padding="@dimen/_15px_in720p" >
+
+        <LinearLayout
+            android:id="@+id/base_back_lay"
+            android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/back_tv"
+                android:layout_width="@dimen/_20px_in720p"
+                android:layout_height="@dimen/_30px_in720p"
+                android:layout_marginLeft="@dimen/_10px_in720p"
+                android:background="@drawable/back_index" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="选择套餐"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_36px_in720p" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_30px_in720p"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请选择针对"
+            android:textColor="#777777" />
+
+        <TextView
+            android:id="@+id/package_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12312345678"
+            android:textColor="@color/lan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="的套餐"
+            android:textColor="#777777" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/package_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_30px_in720p"
+        android:background="@drawable/packageselectbg"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/_10px_in720p"
+        android:paddingRight="@dimen/_10px_in720p"
+        android:text="请选择"
+        android:textColor="#777777"
+        android:textSize="@dimen/_30px_in720p" />
+
+    <LinearLayout
+        android:id="@+id/xufei"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:layout_marginTop="@dimen/_20px_in720p"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/is_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20px_in720p" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是否自动续费" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/package_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_60px_in720p"
+        android:background="@drawable/bg_blue"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_35px_in720p" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/packagetishi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_60px_in720p"
+        android:lineSpacingExtra="@dimen/_15px_in720p"
+        android:text="1、如果三天之内对方没有回复确认短信，添加好友时所扣款项将自动退回账户。"
+        android:textColor="#777777"
+        android:textSize="@dimen/_28px_in720p" />
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_20px_in720p"
+        android:lineSpacingExtra="@dimen/_15px_in720p"
+        android:text="2、该号码收到的确认短信的内容大致为："
+        android:textColor="#777777"
+        android:textSize="@dimen/_28px_in720p" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/packagetishi1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_80px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_20px_in720p"
+        android:lineSpacingExtra="@dimen/_15px_in720p"
+        android:text="①、【定位云平台】定位云订购成功"
+        android:textColor="#777777"
+        android:textSize="@dimen/_28px_in720p" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/packagetishi2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_80px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_20px_in720p"
+        android:lineSpacingExtra="@dimen/_15px_in720p"
+        android:text="②、激活定位功能，同意请回复JH"
+        android:textColor="#777777"
+        android:textSize="@dimen/_28px_in720p" />
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_80px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_20px_in720p"
+        android:lineSpacingExtra="@dimen/_15px_in720p"
+        android:text="注：短信内容无法自行更改"
+        android:textColor="#777777"
+        android:textSize="@dimen/_28px_in720p" />
+
+</LinearLayout>

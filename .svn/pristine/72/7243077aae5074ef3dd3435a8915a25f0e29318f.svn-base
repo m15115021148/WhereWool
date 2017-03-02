@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 联系人的对话框布局 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_390px_in720p"
+    android:layout_height="@dimen/_580px_in720p"
+    android:background="@drawable/linkmanbg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_20px_in720p"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="被定位号码"
+            android:textColor="#333333"
+            android:textSize="@dimen/_30px_in720p" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/linman_caozuo"
+            android:textColor="@color/popupwinow_font_color_a"
+            android:textSize="@dimen/_20px_in720p" />
+    </LinearLayout>
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+          android:layout_marginBottom="@dimen/_100px_in720p"
+        android:orientation="vertical"
+        ><TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        
+        android:background="@color/user_login_bottom_color" />
+
+    <ListView
+        android:id="@+id/popupwinow_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+      android:layout_marginBottom="1dp"
+        android:scrollbars="none" >
+    </ListView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/user_login_bottom_color" />
+    </LinearLayout>
+    
+
+    <LinearLayout 
+        android:id="@+id/add_friend"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView 
+            android:layout_width="@dimen/_30px_in720p"
+        android:layout_height="@dimen/_30px_in720p"
+        android:background="@drawable/friend_list_add"
+            />
+          <TextView
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10px_in720p"
+        android:layout_marginBottom="@dimen/_10px_in720p"
+        android:layout_marginLeft="@dimen/_10px_in720p"
+        android:gravity="center"
+        android:text="添加联系人"
+        android:textColor="@color/lan"
+        android:textSize="@dimen/_30px_in720p" />
+    </LinearLayout>
+  
+
+</LinearLayout>

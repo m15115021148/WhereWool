@@ -1,0 +1,334 @@
+package com.sitemap.na2ne.activities;
+
+import java.security.MessageDigest;
+import java.util.Set;
+
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.KeyEvent;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+
+import com.alibaba.fastjson.JSON;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.application.MyApplication;
+import com.sitemap.na2ne.config.WebUrlConfig;
+import com.sitemap.na2ne.http.XUtilsHelper;
+import com.sitemap.na2ne.models.UserModel;
+import com.sitemap.na2ne.utils.CommonToast;
+import com.sitemap.na2ne.views.MyProgressDialog;
+import com.umeng.analytics.MobclickAgent;
+
+/**
+ * 
+ * @ClassName: LoginActivity.java
+ * @Description: 登录界面
+ * @author chenhao
+ * @Date 2015-11-14
+ */
+
+public class LoginActivity extends Activity implements OnClickListener {
+	private EditText userName,password;//账号密码
+	private static MyProgressDialog progressDialog;//进度条
+	private XUtilsHelper httpUtil = null;//网络请求帮助类对象
+	private static LoginActivity context;//本类
+	private TextView loginBack;//回退
+	private LinearLayout base_back_lay;//返回键
+	private TextView login_user_register;//注册按钮
+	private TextView login_user_findpwd;//找回密码
+	private long exitTime = 0;//退出时间
+	private static final int MSG_SET_ALIAS = 1001;//极光设置 别名
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+//		// 隐藏android系统的状态栏
+//		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_login);
+		progressDialog = MyProgressDialog.createDialog(this);
+		context=this;
+		initview();
+		SharedPreferences preferences=context.getSharedPreferences("user",Context.MODE_PRIVATE);
+		if (preferences.getString("username", "")!=null&&!preferences.getString("username", "").equals("")) {
+			userName.setText(preferences.getString("username", ""));
+		}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		// 友盟统计
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	public void onPause() {
+		super.onPause();
+		// 友盟统计
+		MobclickAgent.onPause(this);
+	}
+
+	/**
+	 * 初始化控件
+	 */
+	private void initview() {
+		// 设置监听
+		LinearLayout textView = (LinearLayout) findViewById(R.id.user_login);
+		textView.setOnClickListener(this);
+		userName=(EditText)findViewById(R.id.user_name_ed);
+		password=(EditText)findViewById(R.id.pwd_ed);
+		loginBack=(TextView)findViewById(R.id.login_back_tv);
+		loginBack.setOnClickListener(this);
+		base_back_lay=(LinearLayout)findViewById(R.id.base_back_lay);
+		base_back_lay.setOnClickListener(this);
+		login_user_register=(TextView)findViewById(R.id.login_user_register);
+		login_user_register.setOnClickListener(this);
+		login_user_findpwd=(TextView)findViewById(R.id.login_user_findpwd);
+		login_user_findpwd.setOnClickListener(this);
+	}
+	
+	
+	private final  Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			if (progressDialog != null && progressDialog.isShowing()) {
+				progressDialog.dismiss();// 关闭进度条
+			}
+			if (msg.what == 2) {
+				// 登陆操作
+				if (msg.arg1 == 2) {
+//					System.out.println(msg.obj.toString());
+					int status = -1;
+					MyApplication.userModel=JSON.parseObject(msg.obj.toString(), UserModel.class);
+//					System.out.println("2222222222222222222");
+					if (MyApplication.userModel!=null) {
+						status=MyApplication.userModel.getStatus();
+					}
+					switch (status) {
+					case 1:
+						CommonToast.showShortToastMessage(context, "登录成功！");
+						JPushInterface.setAliasAndTags(getApplicationContext(),MyApplication.userModel.getUserID(), null, mAliasCallback);
+						MyApplication.isLogin=2;
+						SharedPreferences preferences=context.getSharedPreferences("user",Context.MODE_PRIVATE);
+						Editor editor=preferences.edit();
+						editor.putString("username", userName.getText().toString().trim());
+						editor.putString("pwd", MD5(password.getText().toString()));
+						editor.commit();
+						// 跳转到界面
+						Intent intent = new Intent(context, HomePageActivity.class);
+						context.startActivity(intent);
+						context.finish();
+						break;
+					case 2:
+						CommonToast.showShortToastMessage(context, "用户名或密码错误！");
+						break;
+					case 3:
+						CommonToast.showShortToastMessage(context, "服务器异常！");
+						break;
+					case 4:
+						CommonToast.showShortToastMessage(context, "邮箱未验证，请先验证邮箱！");
+						break;
+					default:
+						break;
+					}
+
+				}
+
+			} else if (msg.what == 1) {
+				CommonToast.showShortToastMessage(context, "突然找不到数据了，再给次机会吧>_<");
+				// 获取数据异常
+			} else if (msg.what == 0) {
+				// 返回数据为null
+				if (msg.arg1 == 1) {
+					CommonToast.showShortToastMessage(context, "服务器异常！");
+				}
+				if (msg.arg1 == 2) {
+					CommonToast.showShortToastMessage(context, "服务器异常！");
+				}
+			}
+			else if(msg.what==MSG_SET_ALIAS){
+				JPushInterface.setAliasAndTags(getApplicationContext(),MyApplication.userModel.getUserID(), null, mAliasCallback);
+//				JPushInterface.setAlias(getApplicationContext(), MyApplication.userModel.getUserID(), mAliasCallback);
+			}
+		}
+
+	};
+
+	/**
+	 * 点击监听
+	 */
+	@Override
+	public void onClick(View v) {
+		// 点击登录
+		if (v.getId() == R.id.user_login) {
+			if (userName.getText().toString().trim().equals("")||userName.getText().toString().trim()==null) {
+				Toast.makeText(LoginActivity.this, "用户名不能为空", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (password.getText().toString().trim().equals("")||password.getText().toString().trim()==null) {
+				Toast.makeText(LoginActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (MyApplication.getNetObject().isNetConnected()) {
+				if (progressDialog != null && !progressDialog.isShowing()) {
+					progressDialog.setMessage("登陆中...");
+					progressDialog.show();
+				}
+				
+				httpUtil = new XUtilsHelper(WebUrlConfig.login(userName.getText().toString().trim(),
+						MD5(password.getText().toString())), handler);
+				httpUtil.sendGet(2);
+			} else {
+				CommonToast.showShortToastMessage(this, "网络无法连接！");
+			}
+//			Intent MainActivityIntent = new Intent(this, HomePageActivity.class);
+//			startActivity(MainActivityIntent);
+		}
+		if (v==loginBack) {
+			Intent intent = new Intent(context, HomePageActivity.class);
+			context.startActivity(intent);
+			context.finish();
+		}
+		if (v==base_back_lay) {
+			Intent intent = new Intent(context, HomePageActivity.class);
+			context.startActivity(intent);
+			context.finish();
+		}
+		if (v==login_user_register) {
+			Intent intent = new Intent(context, RegisterPhoneActivity.class);
+			context.startActivity(intent);
+		}
+		if (v==login_user_findpwd) {
+			Intent intent = new Intent(context, FindPwdActivity.class);
+			context.startActivity(intent);
+		}
+	}
+
+	/**
+	 * MD5加密，32位
+	 * @param str
+	 * @return
+	 */
+	public static String MD5(String str) {
+		MessageDigest md5 = null;
+		try {
+			md5 = MessageDigest.getInstance("MD5");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+
+		char[] charArray = str.toCharArray();
+		byte[] byteArray = new byte[charArray.length];
+
+		for (int i = 0; i < charArray.length; i++) {
+			byteArray[i] = (byte) charArray[i];
+		}
+		byte[] md5Bytes = md5.digest(byteArray);
+
+		StringBuffer hexValue = new StringBuffer();
+		for (int i = 0; i < md5Bytes.length; i++) {
+			int val = ((int) md5Bytes[i]) & 0xff;
+			if (val < 16) {
+				hexValue.append("0");
+			}
+			hexValue.append(Integer.toHexString(val));
+		}
+		return hexValue.toString().toUpperCase();
+	}
+
+	
+	/**
+	 *返回键，2秒内再次点击退出应用 
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			if ((System.currentTimeMillis() - exitTime) > 2000) {
+				Toast.makeText(getApplicationContext(), "再按一次退出程序!",
+						Toast.LENGTH_SHORT).show();
+				exitTime = System.currentTimeMillis();
+			} else {
+				exit();
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	/**
+	 * 退出应用程序按钮功能
+	 */
+	@SuppressWarnings("deprecation")
+	public void exit() {
+		// 设置程序完全退出
+		int currentVersion = android.os.Build.VERSION.SDK_INT;
+		if (currentVersion > android.os.Build.VERSION_CODES.ECLAIR_MR1) {
+//			Intent startMain = new Intent(Intent.ACTION_MAIN);
+//			startMain.addCategory(Intent.CATEGORY_HOME);
+//			startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//			startActivity(startMain);
+			HomePageActivity.context.finish();
+//			if (UserActivity.context!=null) {
+//				UserActivity.context.finish();
+//			}
+			System.exit(0);
+		} else {// android2.1
+			ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+			am.restartPackage(getPackageName());
+		}
+
+	}
+	/**
+	 * 设置极光别名回调
+	 */
+	private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs ;
+            switch (code) {
+            case 0:
+                logs = "Set tag and alias success";
+                Log.i("TAG", logs);
+                break;
+                
+            case 6002:
+                logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                Log.i("TAG", logs);
+                if (MyApplication.getNetObject().isNetConnected()) {
+                	handler.sendMessageDelayed(handler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+    			} else {
+    				CommonToast.showShortToastMessage(context, "网络无法连接！");
+    			}
+                break;
+            
+            default:
+                logs = "Failed with errorCode = " + code;
+                Log.e("TAG", logs);
+            }
+            
+            CommonToast.showShortToastMessage(context, logs);
+        }
+	    
+	};
+}

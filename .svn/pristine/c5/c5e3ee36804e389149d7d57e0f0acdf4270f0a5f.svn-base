@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 电子围栏对话框 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/_20px_in720p"
+    android:background="@drawable/index_dzwl_bg"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_20px_in720p"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10px_in720p" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/index_popup_guiji_starttime"
+                android:textColor="#333333"
+                android:textSize="@dimen/_30px_in720p" />
+
+            <EditText
+                android:id="@+id/startTime"
+                android:layout_width="@dimen/_300px_in720p"
+                android:layout_height="30dp"
+                android:background="@drawable/index_border_shape"
+                android:hint="@string/index_popup_defuat_starttime"
+                android:padding="5dp"
+               android:textColor="#333333"
+                android:textSize="@dimen/_30px_in720p" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30px_in720p" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/index_popup_guiji_endtime"
+                android:textColor="#333333"
+                android:textSize="@dimen/_30px_in720p" />
+
+            <EditText
+                android:id="@+id/endTime"
+                android:layout_width="@dimen/_300px_in720p"
+                android:layout_height="30dp"
+                android:background="@drawable/index_border_shape"
+                android:hint="@string/index_popup_defuat_endtime"
+                android:padding="5dp"
+                android:textColor="#333333"
+                android:textSize="@dimen/_30px_in720p" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30px_in720p"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="监听方式"
+                android:textColor="#333333"
+                android:textSize="@dimen/_30px_in720p" />
+
+            <TextView
+                android:id="@+id/weilanSp"
+                android:layout_width="@dimen/_300px_in720p"
+                android:layout_height="30dp"
+                android:background="@drawable/index_border_shape"
+                android:padding="5dp"
+                android:textColor="#333333"
+                android:textSize="@dimen/_30px_in720p" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/_40px_in720p"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/index_dzwl_old"
+            android:layout_width="@dimen/_123px_in720p"
+            android:layout_height="@dimen/_38px_in720p"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/_20px_in720p"
+            android:src="@drawable/index_dzwl_old" />
+
+        <ImageView
+            android:id="@+id/index_dzwl_draw"
+            android:layout_width="@dimen/_114px_in720p"
+            android:layout_height="@dimen/_114px_in720p"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/_20px_in720p"
+            android:src="@drawable/index_dzwl_draw" />
+    </LinearLayout>
+
+</LinearLayout>

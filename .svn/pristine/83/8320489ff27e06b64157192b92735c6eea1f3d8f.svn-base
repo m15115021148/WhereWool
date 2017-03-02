@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 追踪对话框 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="10dp"
+    android:padding="5dp"
+    android:gravity="center_horizontal"
+    android:background="@color/index_tm"
+     >
+   
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="10dp"
+        >
+   	<LinearLayout 
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    
+   	    >
+   	    <TextView 
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:text="@string/index_popup_guiji_startdate"
+   	        android:textSize="@dimen/_30px_in720p"
+        android:textColor="#333333"
+   	        android:layout_marginRight="10dp"
+   	        />
+
+   	    <EditText
+   	        android:id="@+id/startDate"
+   	        android:layout_width="180dp"
+   	        android:layout_height="30dp"
+   	        android:background="@drawable/index_border_shape"
+   	        android:padding="5dp"
+   	        android:hint="@string/index_popup_defuat_startdate"
+   	        android:textSize="@dimen/_30px_in720p"
+        android:textColor="#333333" />
+   	    
+   	</LinearLayout>
+   	
+   	 	<LinearLayout 
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_marginTop="10dp"
+   	    >
+   	    <TextView 
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:text="@string/index_popup_guiji_enddate"
+   	        android:textSize="@dimen/_30px_in720p"
+        android:textColor="#333333"
+   	        android:layout_marginRight="10dp"
+   	        />
+   	    <EditText 
+   	        android:id="@+id/endDate"
+   	        android:layout_width="180dp"
+   	        android:layout_height="30dp"
+   	        android:background="@drawable/index_border_shape"
+   	        android:padding="5dp"
+   	        android:hint="@string/index_popup_defuat_enddate"
+   	       android:textSize="@dimen/_30px_in720p"
+        android:textColor="#333333"
+   	        />
+   	    
+   	</LinearLayout>
+   	<!--  
+   	  	<LinearLayout 
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_marginTop="10dp"
+   	    >
+   	    <TextView 
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:text="@string/index_popup_guiji_starttime"
+   	        android:textSize="@dimen/login_font_14"
+   	        android:layout_marginRight="10dp"
+   	        />
+
+   	    <EditText
+   	        android:id="@+id/startTime"
+   	        android:layout_width="180dp"
+   	        android:layout_height="30dp"
+   	        android:background="@drawable/index_border_shape"
+   	        android:padding="5dp"
+   	        android:textColor="@color/user_login_edit_font_color"
+   	        android:hint="@string/index_popup_defuat_starttime"
+   	        android:textSize="@dimen/login_font_14" />
+   	    
+   	</LinearLayout>
+   	
+   	 	<LinearLayout 
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_marginTop="10dp"
+   	    >
+   	    <TextView 
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:text="@string/index_popup_guiji_endtime"
+   	        android:textSize="@dimen/login_font_14"
+   	        android:layout_marginRight="10dp"
+   	        />
+   	    <EditText 
+   	        android:id="@+id/endTime"
+   	        android:layout_width="180dp"
+   	        android:layout_height="30dp"
+   	        android:background="@drawable/index_border_shape"
+   	        android:textColor="@color/user_login_edit_font_color"
+   	        android:padding="5dp"
+   	        android:hint="@string/index_popup_defuat_endtime"
+   	        android:textSize="@dimen/login_font_14"
+   	        />
+   	    
+   	</LinearLayout>
+   	-->
+   </LinearLayout>
+    
+    <ImageView 
+        android:id="@+id/guiji"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/index_start_guiji"
+        android:layout_gravity="center_vertical"
+        />
+
+</LinearLayout>

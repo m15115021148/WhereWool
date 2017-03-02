@@ -1,0 +1,143 @@
+package com.sitemap.na2ne.activities;
+
+import org.json.JSONObject;
+
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.application.MyApplication;
+import com.sitemap.na2ne.config.RequestCode;
+import com.sitemap.na2ne.config.WebUrlConfig;
+import com.sitemap.na2ne.http.HttpUtil;
+import com.sitemap.na2ne.utils.ToastUtil;
+import com.sitemap.na2ne.views.MyProgressDialog;
+import com.umeng.analytics.MobclickAgent;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.webkit.WebSettings.LayoutAlgorithm;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+/**
+ * 功能页面 com.sitemap.na2ne.activities.GongNengActivity
+ * 
+ * @author zhang create at 2016年1月19日 下午5:40:45
+ */
+public class GongNengDetailedActivity extends Activity implements OnClickListener {
+	private static GongNengDetailedActivity context;// 本类
+	private LinearLayout base_back_lay;// 返回键
+	private TextView back;// 回退
+	private static MyProgressDialog progressDialog;// 进度条
+	private HttpUtil http = null;// 网络请求帮助类对象
+	private int wt=0;//第几个问题
+	private TextView wt_title,wt_answer,wt_img;//问题，答案，图片
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_gongneng_detailed);
+		progressDialog = MyProgressDialog.createDialog(this);
+		context = this;
+		initview();
+	}
+
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		// 友盟统计
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		// 友盟统计
+		MobclickAgent.onPause(this);
+	}
+
+	/**
+	 * 初始化控件
+	 */
+	private void initview() {
+		back = (TextView) findViewById(R.id.back_tv);
+		back.setOnClickListener(this);
+		wt_title= (TextView) findViewById(R.id.wt_title);
+		wt_answer= (TextView) findViewById(R.id.wt_answer);
+		wt_img= (TextView) findViewById(R.id.wt_img);
+		base_back_lay = (LinearLayout) findViewById(R.id.base_back_lay);
+		base_back_lay.setOnClickListener(this);
+		wt=getIntent().getIntExtra("wt", 1);
+		switch (wt) {
+		case 1:
+			wt_title.setText("如何选择/切换联系人，以及快捷添加联系人");
+			wt_answer.setText("答：在首页想要定位一个联系人，先得选择，点击地图右上角的常");
+			wt_img.setBackgroundResource(R.drawable.wt1_03);
+			break;
+		case 2:
+			wt_title.setText("对联系人的定位/追踪记录如何清除");
+			wt_answer.setText("答：对所选联系人定位或追踪定位后，地图上会显示位置信息，点击常用联系人下方的垃圾桶图标，可以清楚这些信息记录，或者点击所选联系人浮框右侧的叉直接关闭对该联系人的定位。");
+			wt_img.setBackgroundResource(R.drawable.wt2_03);
+			break;
+		case 3:
+			wt_title.setText("如何定位自己的位置");
+			wt_answer.setText("答：点击地图左下角的定位图标即定位到自己当前位置。");
+			wt_img.setBackgroundResource(R.drawable.wt3_03);
+			break;
+		case 4:
+			wt_title.setText("如何对联系人自动进行持续追踪定位");
+			wt_answer.setText("答：想要对所选联系人在一段时间内进行持续追踪定位，就点击地图右下角的追踪定位图标，选择追踪总时间和定位间隔时间，即自动持续定位该联系人。并可以查看追踪定位的历史记录。");
+			wt_img.setBackgroundResource(R.drawable.wt4_03);
+			break;
+		case 5:
+			wt_title.setText("如何选择/切换联系人，以及快捷添加联系人");
+			wt_answer.setText("答：在首页想要定位一个联系人，先得选择，点击地图右上角的常");
+			wt_img.setBackgroundResource(R.drawable.wt1_03);
+			break;
+		case 6:
+			wt_title.setText("如何选择/切换联系人，以及快捷添加联系人");
+			wt_answer.setText("答：在首页想要定位一个联系人，先得选择，点击地图右上角的常");
+			wt_img.setBackgroundResource(R.drawable.wt1_03);
+			break;
+		case 7:
+			wt_title.setText("如何选择/切换联系人，以及快捷添加联系人");
+			wt_answer.setText("答：在首页想要定位一个联系人，先得选择，点击地图右上角的常");
+			wt_img.setBackgroundResource(R.drawable.wt1_03);
+			break;
+		case 8:
+			wt_title.setText("如何选择/切换联系人，以及快捷添加联系人");
+			wt_answer.setText("答：在首页想要定位一个联系人，先得选择，点击地图右上角的常");
+			wt_img.setBackgroundResource(R.drawable.wt1_03);
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v == base_back_lay) {
+			finish();
+		}
+		if (v == back) {
+			finish();
+		}
+	}
+
+
+
+}

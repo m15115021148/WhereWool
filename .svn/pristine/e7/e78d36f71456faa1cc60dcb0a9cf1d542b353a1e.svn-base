@@ -1,0 +1,313 @@
+package com.sitemap.na2ne.http;
+
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
+
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.widget.Button;
+
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+
+/**
+ * 
+ * @ClassName: XUtilsHelper.java
+ * @Description: 开发框架XUtils帮助类，此类封装了该框架的各种网络请求
+ * @author chenhao
+ * @Date 2015-11-14
+ */
+
+public class XUtilsHelper {
+
+	private Handler handler;
+	private String url;
+	private HttpUtils httpUtils;
+	// 编码与服务器端字符编码一致为utf-8
+	private static final String CHARSET = "utf-8";
+	private RequestParams params;
+	private String filename;
+	// 网络数据返回结果状态码（ 0：返回数据为null，1：发生异常；2：正常）
+	private int status = 2;
+
+	/**
+	 * 构造方法
+	 * 
+	 * @param url
+	 *            网络资源地址
+	 * @param handler
+	 *            消息处理对象，用于请求完成后的怎么处理返回的结果数据
+	 */
+	public XUtilsHelper(String url, Handler handler) {
+		// 保存网络资源文件名，要在转码之前保存，否则是乱码
+		filename = url.substring(url.lastIndexOf("/") + 1, url.length());
+		// 解决中文乱码问题，地址中有中文字符造成乱码问题
+		 try {
+			this.url = new String(url.getBytes(), CHARSET).replace(" ", "%20");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	
+		this.httpUtils = XutilsHttpClient.getInstence();
+		this.handler = handler;
+		this.params = new RequestParams(CHARSET); 
+	}
+
+	/**
+	 * 异步的
+	 * 
+	 * @param order
+	 *            网络请求顺序标识符 ，该方法的handler返回的数据有三种情况 0：返回数据为null，1：发生异常；2：正常
+	 */
+	public void sendGet(final int order) {
+		httpUtils.send(HttpRequest.HttpMethod.GET, url,
+				new RequestCallBack<String>() {
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						Log.i("jack", "Fail_url: " + url);
+						Log.i("jack", "HttpException: " + arg0.toString() + " "
+								+ arg1);
+						Message msg = Message.obtain();
+						status = 1;
+						msg.what = status;
+						msg.arg1 = order;
+						handler.sendMessage(msg);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						Log.i("jack", "Suceess_url: " + url);
+						Message msg = Message.obtain();
+						Log.i("jack", "result: " + arg0.result);
+						if (arg0.result == null || arg0.result.equals("null")
+								|| arg0.result == "") {
+							status = 0;
+							msg.arg1 = order;
+							msg.what = status;
+						} else {
+							status = 2;
+							msg.what = status;
+							msg.arg1 = order;
+							msg.obj = arg0.result;
+
+						}
+						handler.sendMessage(msg);
+					}
+				});
+	}
+
+	/**
+	 * POST请求时需要添加提交参数
+	 * 
+	 * @param key
+	 *            参数key
+	 * @param values
+	 *            参数value
+	 */
+	public void addRequestParams(String key, String value) {
+		params.addBodyParameter(key, value);
+	}
+	/**
+	 * POST请求时需要添加提交参数
+	 * 
+	 * @param key
+	 *            参数key
+	 * @param values
+	 *            参数value
+	 */
+	public void addRequestParams(String key, File value) {
+		params.addBodyParameter(key, value);
+	}
+	/**
+	 * 异步的
+	 * 
+	 * @param order
+	 *            网络请求顺序标识符 ，该方法的handler返回的数据有三种情况 0：返回数据为null，1：发生异常；2：正常
+	 */
+	public void sendPost(final int order) {
+
+		httpUtils.send(HttpRequest.HttpMethod.POST, url, params,
+				new RequestCallBack<String>() {
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						Log.i("jack", "url: " + url);
+						Message msg = Message.obtain();
+						if (arg0.result == null || arg0.result.equals("null")) {
+							status = 0;
+							msg.arg1 = order;
+							msg.what = status;
+						} else {
+							status = 2;
+							msg.arg1 = order;
+							msg.what = status;
+							msg.obj = arg0.result;
+							Log.v("jack", "result: " + arg0.result);
+						}
+						handler.sendMessage(msg);
+
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						Log.v("jack", "url: " + url);
+						Message msg = Message.obtain();
+						status = 1;
+						msg.what = status;
+						msg.arg1 = order;
+						handler.sendMessage(msg);
+
+					}
+				});
+
+	}
+
+	/**
+	 * 上传文件到服务器（post方法） 异步的
+	 * 
+	 * @param key
+	 *            提交参数名称
+	 * @param file
+	 *            要上传的文件对象
+	 */
+	public void uploadFile(final int order) {
+//		params.addBodyParameter(key, file);
+		httpUtils.send(HttpRequest.HttpMethod.POST, url, params,
+				new RequestCallBack<String>() {
+
+					@Override
+					public void onStart() {
+					}
+
+					@Override
+					public void onLoading(long total, long current,
+							boolean isUploading) {
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						Log.i("jack", "Suceess_url——upload: " + url);
+						Message msg = Message.obtain();
+						Log.i("jack", "result——upload: " + arg0.result);
+						if (arg0.result == null || arg0.result.equals("null")) {
+							status = 0;
+							msg.arg1 = order;
+							msg.what = status;
+						} else {
+							status = 2;
+							msg.arg1 = order;
+							msg.what = status;
+							msg.obj = arg0.result;
+							Log.v("jack", "result: " + arg0.result);
+						}
+						handler.sendMessage(msg);
+
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						Log.v("jack", "url: " + url);
+						Message msg = Message.obtain();
+						status = 1;
+						msg.what = status;
+						msg.arg1 = order;
+						handler.sendMessage(msg);
+					}
+				});
+	}
+
+	/**
+	 * 从服务器上下载文件保存到系统磁盘上 异步的
+	 * 
+	 * @param saveLocation
+	 *            下载的文件保存路径
+	 * @param downloadBtn
+	 *            触发下载操作的控件按钮，用于设置下载进度情况
+	 */
+	public void downloadFile(String saveLocation, final Button downloadBtn) {
+		httpUtils.download(url, saveLocation + filename,
+				new RequestCallBack<File>() {
+
+					@Override
+					public void onStart() {
+						downloadBtn.setText("连接服务器中...");
+					}
+
+					@Override
+					public void onLoading(long total, long current,
+							boolean isUploading) {
+						DecimalFormat df = new DecimalFormat("#.##");
+						downloadBtn.setText("下载中... "
+								+ df.format((double) current / 1024 / 1024)
+								+ "MB/"
+								+ df.format((double) total / 1024 / 1024)
+								+ "MB");
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<File> arg0) {
+						downloadBtn.setText("打开文件");
+						// arg0.result.getAbsolutePath()//文件存储的路径
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						arg0.printStackTrace();
+					}
+				});
+	}
+
+	/**
+	 * 从服务器上下载文件保存到系统磁盘上，
+	 * 
+	 * @param saveLocation
+	 *            下载的文件保存路径
+	 */
+	public void downloadFile(String saveLocation) {
+		httpUtils.download(url, saveLocation + "/" + filename,
+				new RequestCallBack<File>() {
+
+					@Override
+					public void onStart() {
+					}
+
+					@Override
+					public void onLoading(long total, long current,
+							boolean isUploading) {
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<File> arg0) {
+						Log.v("jack", "Suceess_url——download: " + url);
+						Message msg = Message.obtain();
+						Log.v("jack", "result——download: " + arg0.result);
+						if (arg0.result == null || arg0.result.equals("null")) {
+							msg.arg1 = 1;
+						} else {
+							msg.arg1 = 0;
+						}
+						msg.what = 2;
+						handler.sendMessage(msg);
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						Log.v("jack", "Fail_url——download: " + url);
+						Log.v("jack",
+								"HttpException——download: " + arg0.toString()
+										+ " " + arg1);
+						Message msg = Message.obtain();
+						msg.what = 2;
+						msg.arg1 = 1;
+						handler.sendMessage(msg);
+					}
+				});
+	}
+
+}

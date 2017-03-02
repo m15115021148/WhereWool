@@ -1,0 +1,168 @@
+# view res/layout/activity_yingdao.xml #generated:7
+-keep class android.support.v4.view.ViewPager { <init>(...); }
+
+# view res/layout/activity_main.xml #generated:3
+-keep class android.support.v4.widget.DrawerLayout { <init>(...); }
+
+# view res/layout/jpush_webview_layout.xml #generated:2
+-keep class cn.jpush.android.ui.FullScreenView { <init>(...); }
+
+# view AndroidManifest.xml #generated:259
+-keep class com.alipay.sdk.app.H5PayActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:240
+-keep class com.baidu.location.f { <init>(...); }
+
+# view res/layout/activity_main.xml #generated:128
+-keep class com.baidu.mapapi.map.MapView { <init>(...); }
+
+# view res/layout/activity_friend_list.xml #generated:49
+# view res/layout/activity_location_detailed.xml #generated:126
+-keep class com.baoyz.swipemenulistview.SwipeMenuListView { <init>(...); }
+
+# view AndroidManifest.xml #generated:289
+-keep class com.saitu.na2ne.wxapi.WXEntryActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:130
+-keep class com.saitu.na2ne.wxapi.WXPayEntryActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:186
+-keep class com.sitemap.na2ne.activities.AboutActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:216
+-keep class com.sitemap.na2ne.activities.AddFriendNameActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:211
+-keep class com.sitemap.na2ne.activities.AddFriendPackageActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:206
+-keep class com.sitemap.na2ne.activities.AddFriendPhoneActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:117
+-keep class com.sitemap.na2ne.activities.BillListActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:196
+-keep class com.sitemap.na2ne.activities.ChangePwdActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:246
+-keep class com.sitemap.na2ne.activities.DownloadService { <init>(...); }
+
+# view AndroidManifest.xml #generated:176
+-keep class com.sitemap.na2ne.activities.FindPwdActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:181
+-keep class com.sitemap.na2ne.activities.FindPwdSureActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:201
+-keep class com.sitemap.na2ne.activities.FriendInfoActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:171
+-keep class com.sitemap.na2ne.activities.FriendListActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:191
+-keep class com.sitemap.na2ne.activities.GongNengActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:226
+-keep class com.sitemap.na2ne.activities.GongNengDetailedActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:97
+-keep class com.sitemap.na2ne.activities.HomePageActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:112
+-keep class com.sitemap.na2ne.activities.LocationDetailedListActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:107
+-keep class com.sitemap.na2ne.activities.LocationFriendListActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:102
+-keep class com.sitemap.na2ne.activities.LoginActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:87
+-keep class com.sitemap.na2ne.activities.MainActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:411
+-keep class com.sitemap.na2ne.activities.MessageListActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:413
+-keep class com.sitemap.na2ne.activities.MessageWebViewActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:231
+-keep class com.sitemap.na2ne.activities.NotificationUpdateActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:122
+-keep class com.sitemap.na2ne.activities.RechargeActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:136
+-keep class com.sitemap.na2ne.activities.RechargeOldListActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:151
+-keep class com.sitemap.na2ne.activities.RefundActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:156
+-keep class com.sitemap.na2ne.activities.RefundOldListActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:141
+-keep class com.sitemap.na2ne.activities.RegisterPhoneActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:146
+-keep class com.sitemap.na2ne.activities.RegisterSureActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:161
+-keep class com.sitemap.na2ne.activities.SetActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:166
+-keep class com.sitemap.na2ne.activities.UserActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:268
+-keep class com.sitemap.na2ne.activities.WebViewActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:221
+-keep class com.sitemap.na2ne.activities.YiJianActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:71
+-keep class com.sitemap.na2ne.application.MyApplication { <init>(...); }
+
+# view AndroidManifest.xml #generated:250
+-keep class com.sitemap.na2ne.service.SubService { <init>(...); }
+
+# view res/layout/activity_main.xml #generated:95
+-keep class com.sitemap.na2ne.utils.MarqueeTextView { <init>(...); }
+
+# view res/layout/wheel_view.xml #generated:7
+-keep class com.sitemap.na2ne.utils.WheelView { <init>(...); }
+
+# view res/layout/activity_recharge.xml #generated:348
+-keep class com.sitemap.na2ne.views.CircleBgView { <init>(...); }
+
+# view AndroidManifest.xml #generated:310
+-keep class com.tencent.connect.common.AssistActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:297
+-keep class com.tencent.tauth.AuthActivity { <init>(...); }
+
+# view res/layout/umeng_socialize_post_share.xml #generated:2
+# view sw550dp-large\res/layout-sw550dp-large/umeng_socialize_post_share.xml #generated:2
+-keep class com.umeng.socialize.editorpage.KeyboardListenRelativeLayout { <init>(...); }
+
+# view AndroidManifest.xml #generated:284
+-keep class com.umeng.socialize.editorpage.ShareActivity { <init>(...); }
+
+# onClick res/layout/activity_webview.xml #generated:15
+-keepclassmembers class * { *** close(...); }
+
+# onClick res/layout/activity_recharge.xml #generated:108
+# onClick res/layout/activity_recharge.xml #generated:123
+# onClick res/layout/activity_recharge.xml #generated:137
+# onClick res/layout/activity_recharge.xml #generated:159
+# onClick res/layout/activity_recharge.xml #generated:173
+# onClick res/layout/activity_recharge.xml #generated:188
+# onClick res/layout/activity_recharge.xml #generated:211
+# onClick res/layout/activity_recharge.xml #generated:225
+# onClick res/layout/activity_recharge.xml #generated:348
+# onClick res/layout/activity_yingdao.xml #generated:43
+-keepclassmembers class * { *** onClick(...); }
+
+# onClick res/layout/activity_recharge.xml #generated:275
+# onClick res/layout/activity_recharge.xml #generated:290
+-keepclassmembers class * { *** setPayType(...); }
+

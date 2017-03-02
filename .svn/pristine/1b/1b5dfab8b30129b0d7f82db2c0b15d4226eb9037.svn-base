@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 功能页面 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gbei"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:background="@color/white"
+        android:padding="@dimen/_15px_in720p" >
+
+        <LinearLayout
+            android:id="@+id/base_back_lay"
+            android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/back_tv"
+                android:layout_width="@dimen/_32px_in720p"
+                android:layout_height="@dimen/_32px_in720p"
+                android:layout_marginLeft="@dimen/_10px_in720p"
+                android:background="@drawable/my_03" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="功能介绍"
+            android:textColor="@color/ghei"
+            android:textSize="@dimen/_36px_in720p" />
+    </RelativeLayout>
+    <WebView 
+        android:id="@+id/gongneng_webView"
+               android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10px_in720p"
+        android:padding="@dimen/_40px_in720p"
+        android:text="哪儿呢v2.1.4版本功能介绍"
+        android:textColor="@color/ghei"
+        android:textSize="@dimen/_40px_in720p"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="@dimen/_40px_in720p"
+        android:layout_marginRight="@dimen/_40px_in720p"
+        android:background="@color/gxian" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_20px_in720p"
+                android:text="1、被定位号码列表"
+                android:textColor="@color/ghei"
+                android:textSize="@dimen/_30px_in720p" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_20px_in720p"
+                android:text="查看被定位号码、添加被定位号码"
+                android:textColor="@color/ghui"
+                android:textSize="@dimen/_25px_in720p" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30px_in720p"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs_03" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs_05" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_40px_in720p"
+                android:text="2、定位"
+                android:textColor="@color/ghei"
+                android:textSize="@dimen/_30px_in720p" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_20px_in720p"
+                android:text="对选择的被定位号码进行定位"
+                android:textColor="@color/ghui"
+                android:textSize="@dimen/_25px_in720p" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30px_in720p"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs_09" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs_10" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_40px_in720p"
+                android:text="3、追踪"
+                android:textColor="@color/ghei"
+                android:textSize="@dimen/_30px_in720p" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_20px_in720p"
+                android:text="对选择的被定位号码进行追踪"
+                android:textColor="@color/ghui"
+                android:textSize="@dimen/_25px_in720p" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30px_in720p"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs2_03" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs2_05" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_40px_in720p"
+                android:text="4、轨迹"
+                android:textColor="@color/ghei"
+                android:textSize="@dimen/_30px_in720p" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_20px_in720p"
+                android:text="查询选择的被定位号码的某个时间段的轨迹"
+                android:textColor="@color/ghui"
+                android:textSize="@dimen/_25px_in720p" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_40px_in720p"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs2_09" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs2_10" />
+            </LinearLayout>
+            
+              <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_40px_in720p"
+                android:text="5、我的"
+                android:textColor="@color/ghei"
+                android:textSize="@dimen/_30px_in720p" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40px_in720p"
+                android:layout_marginRight="@dimen/_40px_in720p"
+                android:layout_marginTop="@dimen/_20px_in720p"
+                android:text="显示个人账户信息"
+                android:textColor="@color/ghui"
+                android:textSize="@dimen/_25px_in720p" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_40px_in720p"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs2_11" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_40px_in720p"
+                    android:layout_weight="1"
+                    android:background="@drawable/gnjs2_12" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

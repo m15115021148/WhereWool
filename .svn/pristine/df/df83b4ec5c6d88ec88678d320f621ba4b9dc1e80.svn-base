@@ -1,0 +1,29 @@
+package com.sitemap.na2ne.utils;
+
+import android.content.Context;
+import android.view.Gravity;
+import android.widget.Toast;
+
+/**
+ * Toast¹¤¾ß
+ * 
+ * @author chenhao
+ * 
+ */
+public class CommonToast {
+	public CommonToast() {
+
+	}
+
+	public static void showLongToastMessage(Context context, String title) {
+		Toast toast = Toast.makeText(context, title, Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.show();
+	}
+
+	public static void showShortToastMessage(Context context, String title) {
+		Toast toast = Toast.makeText(context, title, 2000);
+		toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.show();
+	}
+}

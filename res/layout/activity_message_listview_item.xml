@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/_20px_in720p" >
+
+    <ImageView
+        android:id="@+id/msg_img"
+        android:layout_width="@dimen/_100px_in720p"
+        android:layout_height="@dimen/_100px_in720p"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/user_point"
+        android:layout_width="@dimen/_25px_in720p"
+        android:layout_height="@dimen/_25px_in720p"
+        android:layout_alignRight="@+id/msg_img"
+        android:layout_alignTop="@+id/msg_img"
+        android:src="@drawable/user_message_point" />
+
+    <TextView
+        android:id="@+id/msg_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/msg_img"
+        android:layout_marginLeft="@dimen/_20px_in720p"
+        android:layout_toRightOf="@+id/msg_img"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#333333"
+        android:textSize="@dimen/_36px_in720p" />
+
+    <TextView
+        android:id="@+id/msg_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/msg_img"
+        android:layout_marginLeft="@dimen/_20px_in720p"
+        android:layout_toRightOf="@+id/msg_img"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/_30px_in720p" />
+
+    <ImageView
+        android:id="@+id/msg_index"
+        android:layout_width="@dimen/_60px_in720p"
+        android:layout_height="@dimen/_40px_in720p"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/back_xym" />
+
+</RelativeLayout>

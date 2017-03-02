@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 关于页面 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:background="@color/white"
+        android:padding="@dimen/_15px_in720p" >
+
+        <LinearLayout
+            android:id="@+id/base_back_lay"
+            android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/back_tv"
+                android:layout_width="@dimen/_32px_in720p"
+                android:layout_height="@dimen/_32px_in720p"
+                android:layout_marginLeft="@dimen/_10px_in720p"
+                android:background="@drawable/my_03" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="关于我们"
+            android:textColor="@color/ghei"
+            android:textSize="@dimen/_36px_in720p" />
+    </RelativeLayout>
+ <WebView 
+        android:id="@+id/about_webView"
+               android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+ <View 
+     android:layout_width="match_parent"
+        android:layout_height="@dimen/_30px_in720p"
+        android:background="@color/gbei"
+     />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_60px_in720p"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/_180px_in720p"
+            android:layout_height="@dimen/_180px_in720p"
+            android:background="@drawable/iiic_03"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20px_in720p"
+        android:gravity="center"
+        android:text="当前版本 2.0.1"
+        android:textColor="@color/ghui"
+        android:textSize="@dimen/_30px_in720p"
+         />
+<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_60px_in720p"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8dp"
+        android:paddingLeft="@dimen/_20px_in720p"
+        android:paddingRight="@dimen/_20px_in720p"
+        android:text="哪儿呢是由上海赛图计算机科技有限公司专业团队精心打造的一款精准定位系统（平台），其独特的定位跟踪模式为用户带来极大的便利，基于该系统（平台）研发的哪儿呢APP更是为广大用了过户带来便捷，不耗费流量数据，不用高端智能手机，只需要知道对方的手机号码，就可以简单定位。"
+        android:textColor="#333333" 
+        android:textSize="@dimen/_26px_in720p"/>
+<View 
+     android:layout_width="match_parent"
+        android:layout_height="@dimen/_30px_in720p"
+        android:background="@color/gbei"
+        android:layout_marginTop="@dimen/_40px_in720p"
+     />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40px_in720p"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/_20px_in720p"
+        android:paddingRight="@dimen/_20px_in720p"
+        android:lineSpacingExtra="10dp"
+        android:text="上海赛图计算机科技有限公司\n官方网址：www.na2ne.com\n联系电话：021-61269359\n官方QQ群：546838227"
+        android:textColor="#333333" 
+        android:textSize="@dimen/_30px_in720p"/>
+<View 
+     android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gbei"
+     />
+
+</LinearLayout>

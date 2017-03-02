@@ -1,0 +1,295 @@
+package com.sitemap.na2ne.activities;
+
+import java.util.Arrays;
+
+import com.alibaba.fastjson.JSON;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.adapters.BillListviewAdapter;
+import com.sitemap.na2ne.adapters.LocationDetailedListviewAdapter;
+import com.sitemap.na2ne.application.MyApplication;
+import com.sitemap.na2ne.config.RequestCode;
+import com.sitemap.na2ne.config.WebUrlConfig;
+import com.sitemap.na2ne.http.HttpUtil;
+import com.sitemap.na2ne.models.MoneyModel;
+import com.sitemap.na2ne.models.RefundSubModel;
+import com.sitemap.na2ne.models.UserModel;
+import com.sitemap.na2ne.utils.ToastUtil;
+import com.sitemap.na2ne.utils.TextViewSpanUtil;
+import com.sitemap.na2ne.utils.WheelView;
+import com.sitemap.na2ne.views.MyProgressDialog;
+import com.umeng.analytics.MobclickAgent;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+/**
+ * 申请退款页面页面
+ * 
+ * @author zhang create at 2015年12月24日
+ */
+public class RefundActivity extends Activity implements
+		OnClickListener {
+	private static RefundActivity context;//本类
+	private LinearLayout base_back_lay;//返回键
+	private TextView back;//回退
+	private TextView refund_old;//退款记录
+	private static MyProgressDialog progressDialog;//进度条
+	private HttpUtil http = null;//网络请求帮助类对象
+	private TextView refund_yue;//余额
+	private TextView refund_yuanyin;//退款原因下拉框
+	private ArrayAdapter<String> yuanyinAdapter;
+	private EditText refund_shuoming;//退款说明
+	private TextView refund_sub;//提交退款
+	private String shuoming="";//说明
+	private TextView jieshi;//解释
+	// 选中位置
+			private int refundSelect = 0;
+	//退款原因
+		private String[] yuanyin = new String[] { "定位不准确", "定位需对方同意", "收费过高","功能没达到要求","其他" };
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+//		// 隐藏android系统的状态栏
+//		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_refund);
+		progressDialog = MyProgressDialog.createDialog(this);
+		context = this;
+		if(http == null){
+			http = new HttpUtil(handler);
+		}
+		initview();
+		
+		if (MyApplication.getNetObject().isNetConnected()) {
+			http.sendGet(2,WebUrlConfig.requestMoney(MyApplication.userModel.getUserID()));
+		} else {
+			ToastUtil.showCenterShort(this, "网络无法连接！");
+		}
+//		yuanyinAdapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_spinner_item, yuanyin);
+//		yuanyinAdapter.setDropDownViewResource(R.layout.drop_down_item);
+//		refund_yuanyin.setAdapter(yuanyinAdapter);
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		// 友盟统计
+		MobclickAgent.onResume(this);
+	}
+	@Override
+	public void onPause() {
+		super.onPause();
+		// 友盟统计
+		MobclickAgent.onPause(this);
+	}
+	
+	private final  Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			if (progressDialog != null && progressDialog.isShowing()) {
+				progressDialog.dismiss();// 关闭进度条
+			}
+			switch (msg.what) {
+			case HttpUtil.SUCCESS:
+				// 获得余额
+				if (msg.arg1 == 2) {
+//					System.out.println(msg.obj.toString());
+					MyApplication.moneyModel=JSON.parseObject(msg.obj.toString(), MoneyModel.class);
+					if (MyApplication.moneyModel!=null) {
+						refund_yue.setText(MyApplication.moneyModel.getBalance());
+					}else{
+						ToastUtil.showCenterShort(context, "服务器异常,获取余额失败！");
+					}
+
+				}
+				if (msg.arg1==3) {
+					RefundSubModel re=JSON.parseObject(msg.obj.toString(), RefundSubModel.class);
+					if (re!=null) {
+						int status = -1;
+						status=re.getStatus();
+						switch (status) {
+						case 0:
+							ToastUtil.showCenterShort(context, "提交退款成功，退款金额为："+re.getMoney());
+							MyApplication.moneyModel.setBalance("0");
+							refund_yue.setText(MyApplication.moneyModel.getBalance());
+							finish();
+							break;
+						case 1:
+							ToastUtil.showCenterShort(context, "提交退款失败！");
+							break;
+						default:
+							break;
+						}
+					}
+				}
+				break;
+			case HttpUtil.EMPTY:
+				// 返回数据为null
+				if (msg.arg1 == 1) {
+					ToastUtil.showCenterShort(context, RequestCode.NULL);
+				}
+				if (msg.arg1 == 2) {
+					ToastUtil.showCenterShort(context, RequestCode.NULL);
+				}			
+				break;
+			case HttpUtil.FAILURE:
+				ToastUtil.showCenterShort(context, RequestCode.ERRORINFO);
+				break;
+			case HttpUtil.LOADING:
+				
+				break;
+			default:
+				break;
+		}
+		}
+
+	};
+
+	/**
+	 * 初始化控件
+	 */
+	private void initview() {
+		back=(TextView)findViewById(R.id.back_tv);
+		back.setOnClickListener(this);
+		refund_sub=(TextView)findViewById(R.id.refund_sub);
+		refund_sub.setOnClickListener(this);
+		jieshi=(TextView)findViewById(R.id.jieshi);
+		refund_shuoming=(EditText)findViewById(R.id.refund_shuoming);
+		refund_yue=(TextView)findViewById(R.id.refund_yue);
+//		refund_old=(TextView)findViewById(R.id.refund_old);
+//		refund_old.setOnClickListener(this);
+		base_back_lay=(LinearLayout)findViewById(R.id.base_back_lay);
+		base_back_lay.setOnClickListener(this);
+		refund_yuanyin=(TextView)findViewById(R.id.refund_yuanyin);
+		refund_yuanyin.setOnClickListener(this);
+		refund_yuanyin.setText(yuanyin[refundSelect]);
+		SpannableStringBuilder builder = new SpannableStringBuilder(jieshi.getText().toString());  
+		TextViewSpanUtil tvSpan=new TextViewSpanUtil("021-61269359", context, Color.parseColor("#1cace9"));
+		builder.setSpan(tvSpan, 73, jieshi.getText().toString().length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);  
+		jieshi.setText(builder);
+		jieshi.setMovementMethod(LinkMovementMethod.getInstance());
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v==base_back_lay) {
+			finish();
+		}
+		if (v==back) {
+			finish();
+		}
+		if (v==refund_old) {
+			Intent intent=new Intent(RefundActivity.this,RefundOldListActivity.class);
+			context.startActivity(intent);
+		}
+		if (v==refund_yuanyin) {
+			View outerView = LayoutInflater.from(context).inflate(
+					R.layout.wheel_view, null);
+			WheelView wv = (WheelView) outerView
+					.findViewById(R.id.wheel_view_wv);
+			wv.setOffset(2);
+			wv.setItems(Arrays.asList(yuanyin));
+			wv.setSeletion(refundSelect);
+			wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+				@Override
+				public void onSelected(int selectedIndex,
+						String item) {
+					// Log.d(TAG, "[Dialog]selectedIndex: " +
+					// selectedIndex + ", item: " + item);
+					refundSelect = selectedIndex - 2;
+					refund_yuanyin.setText(yuanyin[refundSelect]);
+
+				}
+			});
+
+			new AlertDialog.Builder(context).setTitle("退款原因")
+					.setView(outerView)
+					.setPositiveButton("确定", null).show();
+		}
+		if (v==refund_sub) {
+			if (refund_yue.getText().equals("0")) {
+				ToastUtil.showCenterShort(this, "余额为0，申请失败！");
+				return;
+			}
+			if (refund_yue.getText().equals("0.0")) {
+				ToastUtil.showCenterShort(this, "余额为0，申请失败！");
+				return;
+			}
+			if (refund_shuoming.getText().toString().trim()!=null&&!refund_shuoming.getText().toString().trim().equals("")) {
+				shuoming=refund_shuoming.getText().toString().trim();
+			}else {
+				ToastUtil.showCenterShort(this, "请填写退款说明！");
+				return;
+			}
+			if (refund_yuanyin.getText().toString().trim().equals("")||refund_yuanyin.getText().toString().trim().equals("请选择")||refund_yuanyin.getText().toString().trim()==null) {
+				ToastUtil.showCenterShort(this, "请选择退款原因！");
+				return;
+			}
+			AlertDialog.Builder normalDia = new AlertDialog.Builder(
+					RefundActivity.this);
+			normalDia.setTitle("提示");
+			normalDia.setMessage("是否确认申请退款，退款后余额将不可用？");
+
+			normalDia.setPositiveButton("确定",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if (MyApplication.getNetObject().isNetConnected()) {
+								if (progressDialog != null && !progressDialog.isShowing()) {
+									progressDialog.setMessage("申请退款中...");
+									progressDialog.show();
+								}
+								
+								String url = WebUrlConfig.requestRefund(MyApplication.userModel.getUserID(),refund_yuanyin.getText().toString().trim(), shuoming);
+								http.sendGet(3,url);
+							} else {
+								ToastUtil.showCenterShort(context, RequestCode.NONETWORK);
+							}
+						}
+					});
+			normalDia.setNegativeButton("取消",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+			normalDia.create().show();
+			
+		}
+	}
+	
+
+}
+
+
+

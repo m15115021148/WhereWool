@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/user_login_bottom_color"
+    tools:context=".MessageListActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:background="@color/lan"
+        >
+
+        <LinearLayout
+            android:padding="@dimen/_15px_in720p" 
+            android:id="@+id/base_back_lay"
+            android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/user_back_tv"
+                android:layout_width="@dimen/_20px_in720p"
+                android:layout_height="@dimen/_30px_in720p"
+                android:layout_marginLeft="@dimen/_10px_in720p"
+                android:background="@drawable/back_index" />
+        </LinearLayout>
+
+        <TextView
+            android:padding="@dimen/_15px_in720p" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/message_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_36px_in720p" />
+    </RelativeLayout>
+
+    <ListView
+        android:layout_marginTop="@dimen/_20px_in720p"
+        android:background="@color/white"
+        android:scrollbars="none"
+        android:id="@+id/msg_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
+
+</LinearLayout>

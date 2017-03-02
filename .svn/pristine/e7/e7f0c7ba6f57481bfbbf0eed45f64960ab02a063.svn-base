@@ -1,0 +1,278 @@
+package com.sitemap.na2ne.activities;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.application.MyApplication;
+import com.sitemap.na2ne.config.WebUrlConfig;
+import com.sitemap.na2ne.http.XUtilsHelper;
+import com.sitemap.na2ne.models.MoneyModel;
+import com.sitemap.na2ne.models.PackageModel;
+import com.sitemap.na2ne.models.TipLableModel;
+import com.sitemap.na2ne.utils.CommonToast;
+import com.sitemap.na2ne.utils.WheelView;
+import com.sitemap.na2ne.views.MyProgressDialog;
+import com.umeng.analytics.MobclickAgent;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+/**
+ * com.sitemap.na2ne.activities.AddFriendPhoneActivity
+ * 
+ * @author zhang create at 2016年3月24日 下午4:52:43
+ */
+public class AddFriendPackageActivity extends Activity implements
+		OnClickListener {
+	public static AddFriendPackageActivity context;// 本类
+	private LinearLayout base_back_lay;// 返回键
+	private TextView back;// 回退
+	private TextView package_name;// 套餐名称
+	private TextView package_next;// 下一步
+	private TextView package_phone;// 联系人电话
+	private String numberType = "1";// 手机号类型
+	private String phonenum = "";// 手机号
+	private static MyProgressDialog progressDialog;// 进度条
+	private XUtilsHelper httpUtil = null;// 网络请求帮助类对象
+	private final int ZERO = 0, ONE = 1, TWO = 2, SEVEN = 7;// 0/1/2/3/4/5/7/8/11数字
+	public List<PackageModel> buyPackage = new ArrayList<PackageModel>();// 购买套餐
+	private String selectType = "";// 选择的类型
+	private String jine;// 选择的金额
+	private String packageType = "";// 套餐类型
+	// 选中位置
+	private int packageSelect = 0;
+	// 套餐类型
+	private List<String> buyType = new ArrayList<String>();
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_addfriend_package);
+		context = this;
+		progressDialog = MyProgressDialog.createDialog(this);
+		initview();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		// 友盟统计
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		// 友盟统计
+		MobclickAgent.onPause(this);
+	}
+
+	private final Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			if (progressDialog != null && progressDialog.isShowing()) {
+				progressDialog.dismiss();// 关闭进度条
+			}
+			if (msg.what == TWO) {
+				// 获得余额
+				if (msg.arg1 == TWO) {
+					MyApplication.moneyModel = JSON.parseObject(
+							msg.obj.toString(), MoneyModel.class);
+					if (MyApplication.moneyModel != null) {
+					} else {
+						// CommonToast.showShortToastMessage(context,
+						// "服务器繁忙，请稍后重试！");
+					}
+
+				}
+				// 获得套餐列表
+				if (msg.arg1 == SEVEN) {
+					buyType.clear();
+					buyPackage = JSONObject.parseArray(msg.obj.toString(),
+							PackageModel.class);
+					if(buyPackage.size()>0){											
+						for (int i = 0; i < buyPackage.size(); i++) {
+							buyType.add(buyPackage.get(i).getPackageName());
+						}
+						package_name.setText(buyType.get(packageSelect));
+						package_name.callOnClick();
+					}else{
+						CommonToast.showShortToastMessage(context,"请重新选择套餐信息");
+					}
+				}
+
+			} else if (msg.what == ONE) {
+				CommonToast
+						.showShortToastMessage(context, "突然找不到数据了，再给次机会吧>_<");
+				finish();
+				// 获取数据异常
+			} else if (msg.what == ZERO) {
+				// 返回数据为null
+				if (msg.arg1 == ONE) {
+					CommonToast.showShortToastMessage(context, "服务器异常！");
+					finish();
+				}
+				if (msg.arg1 == TWO) {
+					CommonToast.showShortToastMessage(context, "服务器异常！");
+					finish();
+				}
+			}
+		}
+
+	};
+
+	/**
+	 * 初始化控件
+	 */
+	private void initview() {
+		back = (TextView) findViewById(R.id.back_tv);
+		back.setOnClickListener(this);
+		package_next = (TextView) findViewById(R.id.package_next);
+		package_phone = (TextView) findViewById(R.id.package_phone);
+		package_name = (TextView) findViewById(R.id.package_name);
+		package_name.setOnClickListener(this);
+		package_next.setOnClickListener(this);
+		base_back_lay = (LinearLayout) findViewById(R.id.base_back_lay);
+		base_back_lay.setOnClickListener(this);
+		phonenum = getIntent().getStringExtra("phonenum");
+		package_phone.setText(phonenum);
+		numberType = getIntent().getStringExtra("numberType");
+		
+		if (MyApplication.getNetObject().isNetConnected()) {
+			if (progressDialog != null && !progressDialog.isShowing()) {
+				progressDialog.setMessage("正在获得套餐列表...");
+				progressDialog.show();
+			}
+
+			httpUtil = new XUtilsHelper(WebUrlConfig.getPackageInfo(phonenum,
+					numberType), handler);
+			httpUtil.sendGet(SEVEN);
+		} else {
+			CommonToast.showShortToastMessage(context, "网络无法连接！");
+		}
+		if (MyApplication.getNetObject().isNetConnected()) {
+			httpUtil = new XUtilsHelper(
+					WebUrlConfig.requestMoney(MyApplication.userModel
+							.getUserID()), handler);
+			httpUtil.sendGet(TWO);
+		} else {
+			CommonToast.showShortToastMessage(this, "网络无法连接！");
+		}
+	}
+	@Override
+	public void onClick(View v) {
+		if (v == base_back_lay) {
+			finish();
+		}
+		if (v == back) {
+			finish();
+		}
+		if (v == package_next) {
+			if (package_name.getText().toString().equals("请选择")) {
+				CommonToast.showShortToastMessage(context, "请选择套餐！");
+				return;
+			}
+			jine = buyPackage.get(packageSelect).getPackagePrice();
+			selectType = buyPackage.get(packageSelect).getPackageID();
+			packageType = buyPackage.get(packageSelect).getPackageType();
+			
+			if (Integer.parseInt(jine) > Double
+					.parseDouble(MyApplication.moneyModel.getBalance())) {
+				CommonToast.showShortToastMessage(this, "余额不足请充值！");
+				Intent intent = new Intent(AddFriendPackageActivity.this,
+						RechargeActivity.class);
+				intent.putExtra("packageMoney", jine);
+				startActivity(intent);
+				return;
+			}
+			AlertDialog.Builder customDia = new AlertDialog.Builder(context);
+			customDia.setCancelable(false);
+			final View viewDia = LayoutInflater.from(context).inflate(R.layout.add_frien_dialog_item, null);
+			TextView tv1 = (TextView) viewDia.findViewById(R.id.tv_1);
+			// 免费
+			if (packageType.equals("4")) {
+				String result = "1、免费套餐显示的位置不是实时位置；\n2、只有当对方开启并安装过APP时，才能获取对方位置，否则将会定位失败；\n3、付费套餐获取的位置信息为对方的实时位置，且不需要安装APP.";
+				tv1.setText(result);
+			} else {
+				List<TipLableModel> msg3 = JSON.parseArray(getIntent().getStringExtra("msg3"), TipLableModel.class);
+				String lable = "";//颜色的字体
+				String txt = "";//所有的字
+				for (int i = 0; i < msg3.size(); i++) {
+					if(i==msg3.size()-1){
+						lable = lable +  msg3.get(i).getLabel();
+						txt = txt + msg3.get(i).getTxt();
+						break;
+					}
+					if(!msg3.get(i).getLabel().equals("")){
+						lable = lable +  msg3.get(i).getLabel() + ";";
+					}						
+					txt = txt + msg3.get(i).getTxt() + ";";
+				}
+				MyApplication.setTextColor(tv1, txt.replace(";", "\n"), lable);											
+			}
+			customDia.setView(viewDia);
+			customDia.setPositiveButton("同意", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent intent = new Intent(AddFriendPackageActivity.this,
+							AddFriendNameActivity.class);
+					intent.putExtra("numberType", numberType);
+					intent.putExtra("phonenum", phonenum);
+					intent.putExtra("selectType", selectType);
+					intent.putExtra("packageName", package_name.getText().toString());
+					intent.putExtra("msg4", getIntent().getStringExtra("msg4"));
+					startActivity(intent);
+					dialog.dismiss();
+				}
+			});
+			customDia.setNegativeButton("不同意", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			customDia.create().show();
+
+		}
+		if (package_name == v) {
+			View outerView = LayoutInflater.from(context).inflate(
+					R.layout.wheel_view, null);
+			WheelView wv = (WheelView) outerView
+					.findViewById(R.id.wheel_view_wv);
+			wv.setOffset(2);
+			wv.setItems(buyType);
+			wv.setSeletion(packageSelect);
+
+			wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+				@Override
+				public void onSelected(int selectedIndex, String item) {
+					packageSelect = selectedIndex - 2;
+					package_name.setText(buyType.get(packageSelect));
+
+				}
+			});
+
+			new AlertDialog.Builder(context).setTitle("套餐类型")
+					.setView(outerView).setPositiveButton("确定", null).show();
+		}
+	}
+}

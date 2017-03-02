@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 关于页面 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gbei"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:background="@color/lan"
+        android:padding="@dimen/_15px_in720p" >
+
+        <LinearLayout
+            android:id="@+id/base_back_lay"
+            android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/back_tv"
+                android:layout_width="@dimen/_20px_in720p"
+                android:layout_height="@dimen/_30px_in720p"
+                android:layout_marginLeft="@dimen/_10px_in720p"
+                android:background="@drawable/back_index" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="关于"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_36px_in720p" />
+    </RelativeLayout>
+ <WebView 
+        android:id="@+id/about_webView"
+               android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_100px_in720p"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/_196px_in720p"
+            android:layout_height="@dimen/_295px_in720p"
+            android:background="@drawable/naeeee_03"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20px_in720p"
+        android:gravity="center"
+        android:text="V 2.0.1"
+        android:textColor="@color/ghei"
+        android:textSize="@dimen/_30px_in720p"
+         />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_80px_in720p"
+        android:layout_marginTop="@dimen/_300px_in720p"
+        android:gravity="center"
+        android:lineSpacingExtra="10dp"
+        android:text="上海赛图计算机科技有限公司\n联系电话：021-61269359\n网址：www.na2ne.com\n官方QQ群：546838227"
+        android:textColor="#333333" 
+        android:textSize="@dimen/_30px_in720p"/>
+
+
+</LinearLayout>

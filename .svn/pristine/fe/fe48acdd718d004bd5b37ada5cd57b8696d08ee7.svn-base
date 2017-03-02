@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 默认 -->
+    <string name="app_name">哪儿呢</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- 登录 -->
+    <string name="pager_login_title">登录</string>
+    <string name="login_user_name">请输入用户名称</string>
+    <string name="login_user_pwd">"请输入登录密码</string>
+    <string name="login_user_content">我是新用户？</string>
+    <string name="login_user_register">立即注册</string>
+
+    <!-- 首页 -->
+    <string name="pager_index_title">哪儿呢</string>
+    <string name="index_menu_dingwei">定位</string>
+    <string name="index_menu_zhuizong">追踪</string>
+    <string name="index_menu_guiji">轨迹</string>
+    <string name="index_menu_wode">我的</string>
+    <string name="index_clear">清除</string>
+    <string name="index_popup_zhuizong_locationtime">追踪间隔</string>
+    <string name="index_popup_zhuizong_endtime">追踪时间</string>
+    <string name="index_popup_guiji_startdate">开始日期</string>
+    <string name="index_popup_guiji_enddate">结束日期</string>
+    <string name="index_popup_defuat_startdate">请选择开始日期</string>
+    <string name="index_popup_defuat_enddate">请选择结束日期</string>
+    <string name="index_popup_guiji_starttime">开始时间</string>
+    <string name="index_popup_guiji_endtime">结束时间</string>
+    <string name="index_popup_defuat_starttime">请选择开始时间</string>
+    <string name="index_popup_defuat_endtime">请选择结束时间</string>
+    <!-- 我的 -->
+    <string name="pager_user_title">我的</string>
+    <string name="user_chongzhi">充值</string>
+    <string name="user_yue">余额：</string>
+    <string name="user_xfjl">计费账单</string>
+    <string name="user_dwjl">定位记录</string>
+    <string name="user_lxr">联系人管理</string>
+    <string name="user_xtsz">设置</string>
+    <string name="user_share">觉得不错，分享给你的朋友吧！</string>
+    <string name="user_qchc">清除缓存</string>
+    <string name="user_aqtc">注销账号</string>
+    <!-- 定位记录列表 -->
+    <string name="location_list_title">定位记录</string>
+    <string name="location_list_edit">搜索</string>
+    <!-- 定位记录明细 -->
+    <string name="location_detailed_title">定位详情</string>
+    <!-- 计费账单 -->
+    <string name="bill_title">计费账单</string>
+    <!-- 设置 -->
+    <string name="shezhi_title">设置</string>
+    <string name="shezhi_safe">账户与安全</string>
+    <string name="shezhi_gongneng">功能介绍</string>
+    <string name="shezhi_help">帮助与反馈</string>
+    <string name="shezhi_about">关于</string>
+    <!-- 手机注册 -->
+    <string name="register_phone_title">手机注册</string>
+    <string name="register_phone_num">请输入您的手机号</string>
+    <string name="register_phone_name">请输入您的姓名</string>
+    <string name="register_phone_code">请输入验证码</string>
+    <string name="register_phone_sendcode">发送验证码</string>
+    <string name="register_phone_pwd">请输入您的密码</string>
+    <string name="register_phone_repwd">请再次输入您的密码</string>
+    <string name="register_phone_sub">注  册</string>
+    <string name="register_phone_tishi1">注册哪儿呢用户，代表您同意</string>
+    <string name="register_phone_tishi2">哪儿呢用户使用协议</string>
+    <string name="register_phone_tishi3">和</string>
+    <string name="register_phone_tishi4">隐私条款</string>
+    <string name="register_phone_toemail">邮箱注册</string>
+
+    <!-- 邮箱注册 -->
+    <string name="register_email_title">邮箱注册</string>
+    <string name="register_email_num">请输入您的邮箱</string>
+    <string name="register_email_pwd">请输入您的密码</string>
+    <string name="register_email_repwd">请再次输入您的密码</string>
+    <string name="register_email_tophone">手机注册</string>
+    <!-- 添加联系人 -->
+    <string name="addfriend_title">添加联系人</string>
+    <string name="addfriend_sub">提    交</string>
+    <string name="addfriend_tishi">提交后需要该联系人同意且短信回复后才能使用定位服务，若
+由于定位联系人而与联系人产生隐私纠纷，本平台概不负责。</string>
+    <string name="addfriend_num">请输入联系人的手机</string>
+    <string name="addfriend_name">请输入联系人的显示名称</string>
+    <string name="addfriend_miaoshu">终端描述</string>
+    <!-- 充值 -->
+    <string name="recharge_title">充值</string>
+    <string name="recharge_jine">充值金额</string>
+    <!-- 申请退款 -->
+    <string name="refund_title">申请退款</string>
+    <string name="refund_yue">账户余额：</string>
+    <string name="refund_shuoming">说明：在您提交退款申请后10个工作日内我们将作出处理并反馈给您，退款金额将会返回到最近一次充值账户，若退款过程中有什么疑问，请联系客服，客服电话：021-61132501</string>
+    <!-- 充值记录 -->
+    <string name="recharge_old_title">充值记录</string>
+    <!-- 退款记录 -->
+    <string name="refund_old_title">退款记录</string>
+    <!-- 联系人 -->
+    <string name="linman_title">被定位号码</string>
+    <string name="linman_caozuo">(长按修改备注)</string>
+    <string name="friend_title">联系人管理</string>
+    <!-- ListView帮助类 -->
+    <string name="NoChoose">0/3</string>
+    <string name="ChooseOne">1/3</string>
+    <string name="ChooseTow">2/3</string>
+    <string name="ChooseThree">3/3</string>
+    <string name="exitHint">再按一次退出程序</string>
+    <string name="ChooseEnough">最多只可选择三个标签</string>
+    <string name="ChooseHint">请先在上一页选择标签</string>
+    <string name="basic_action_1">删除</string>
+    <string name="basic_action_2">Action_2</string>
+    <string name="basic_del">Delete</string>
+    <string name="str_orange">#fe7b27</string>
+    <string name="str_green">#3cac69</string>
+    <string name="str_red">#FF4444</string>
+    <string name="str_yellow">#FFBB33</string>
+    <string name="str_sky_blue">#33B5E5</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="message_title">我的消息</string>
+    <string name="message_title_web_view">消息详情</string>
+
+</resources>

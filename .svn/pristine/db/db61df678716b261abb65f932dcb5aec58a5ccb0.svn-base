@@ -1,0 +1,163 @@
+package com.sitemap.na2ne.activities;
+
+import java.util.List;
+
+import com.alibaba.fastjson.JSON;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.adapters.MessageListViewAdapter;
+import com.sitemap.na2ne.application.MyApplication;
+import com.sitemap.na2ne.config.WebUrlConfig;
+import com.sitemap.na2ne.http.XUtilsHelper;
+import com.sitemap.na2ne.models.MessageModel;
+import com.sitemap.na2ne.utils.CommonToast;
+import com.sitemap.na2ne.views.MyProgressDialog;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
+/**
+ * @author chenmeng
+ *	消息列表页面
+ */
+public class MessageListActivity extends Activity implements OnClickListener{
+	/**本类*/ 
+	private MessageListActivity mContext;
+	/**listview*/ 
+	private ListView mLv;
+	/**返回上一层*/ 
+	private LinearLayout mBack;
+	/**消息数据*/ 
+	private List<MessageModel> mList = null;
+	/**适配器s*/ 
+	private MessageListViewAdapter mAdapter;
+	/**获取消息tag*/ 
+	private final int GETMSG = 0x2001;
+	/**进度条*/ 
+	private static MyProgressDialog progressDialog; 
+	/**网络请求帮助类对象*/ 
+	private XUtilsHelper httpUtil = null;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);		
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_message_list);
+		mContext = this;
+		initView();
+		initData();
+	}
+	
+	private Handler handler = new Handler(){
+		public void handleMessage(Message msg) {
+			if (progressDialog != null && progressDialog.isShowing()) {
+				progressDialog.dismiss();// 关闭进度条
+			}
+			switch (msg.what) {
+			case 2://成功
+				//消息
+				if(msg.arg1 == GETMSG){
+					mList = JSON.parseArray(msg.obj.toString(), MessageModel.class);
+					if(mList!=null){
+						initListView(mList);
+					}
+					mAdapter.notifyDataSetChanged();
+				}
+				break;
+			case 1://失败
+				CommonToast.showShortToastMessage(mContext, "突然找不到数据了，再给次机会吧>_<");
+				break;
+			default:
+				break;
+			}
+		};
+	};
+
+	/**
+	 * 初始化view
+	 */
+	private void initView() {
+		mBack = (LinearLayout) findViewById(R.id.base_back_lay);
+		mLv = (ListView) findViewById(R.id.msg_listview);
+	}
+
+	/**
+	 * 初始化数据
+	 */
+	private void initData() {
+		mBack.setOnClickListener(this);
+		if (MyApplication.getNetObject().isNetConnected()) {
+			if (progressDialog == null ||!progressDialog.isShowing()) {
+				progressDialog=MyProgressDialog.createDialog(this);
+				progressDialog.setMessage("加载中...");
+				progressDialog.show();
+			}
+			getMessageData();
+		} else {
+			CommonToast.showShortToastMessage(this, "网络无法连接！");
+		}		
+	}
+	
+	/**
+	 * 初始化listview
+	 */
+	private void initListView(final List<MessageModel> list){
+		mAdapter = new MessageListViewAdapter(mContext,list);
+		mLv.setAdapter(mAdapter);
+		mLv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(mContext,MessageWebViewActivity.class);
+				intent.putExtra("msgUrl", list.get(position).getContent());
+				intent.putExtra("isRead", list.get(position).getIsRead());
+				ImageView iv = (ImageView) view.findViewById(R.id.user_point);
+				iv.setVisibility(View.GONE);
+				startActivityForResult(intent, GETMSG);
+			}
+		});		
+	}
+	
+	/**
+	 * 获取消息
+	 */
+	private void getMessageData(){
+		httpUtil = new XUtilsHelper(WebUrlConfig.getMessage(MyApplication.userModel.getUserID()), handler);
+		httpUtil.sendGet(GETMSG);
+	}
+
+	@Override
+	public void onClick(View v) {
+		if(v == mBack){
+			onBackPressed();
+			finish();
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (resultCode) {
+		case GETMSG:
+			getMessageData();					
+			break;
+		default:
+			break;
+		}
+		
+	}
+
+}

@@ -1,0 +1,282 @@
+package com.sitemap.na2ne.activities;
+
+import com.alibaba.fastjson.JSON;
+import com.saitu.na2ne.R;
+import com.sitemap.na2ne.adapters.BillListviewAdapter;
+import com.sitemap.na2ne.adapters.LocationDetailedListviewAdapter;
+import com.sitemap.na2ne.application.MyApplication;
+import com.sitemap.na2ne.config.RequestCode;
+import com.sitemap.na2ne.config.WebUrlConfig;
+import com.sitemap.na2ne.http.HttpUtil;
+import com.sitemap.na2ne.models.CodeModel;
+import com.sitemap.na2ne.models.MoneyModel;
+import com.sitemap.na2ne.models.RefundSubModel;
+import com.sitemap.na2ne.models.UserModel;
+import com.sitemap.na2ne.utils.CommonToast;
+import com.sitemap.na2ne.views.MyProgressDialog;
+import com.umeng.analytics.MobclickAgent;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+/**
+ * 更改密码页面 com.sitemap.na2ne.activities.ChangePwdActivity
+ * 
+ * @author zhang create at 2016年1月21日 下午4:55:48
+ */
+public class ChangePwdActivity extends Activity implements OnClickListener {
+	private static ChangePwdActivity context;// 本类
+	private LinearLayout base_back_lay;// 返回键
+	private TextView back;// 回退
+	private static MyProgressDialog progressDialog;// 进度条
+	private HttpUtil http = null;// 网络请求帮助类对象
+	private EditText changepwd_old;// 原始密码
+	private EditText changepwd_new;// 新设密码
+	private EditText changepwd_re;// 确认密码
+	private TextView changepwd_sub;// 修改密码
+	private final int zero = 0, one = 1, two = 2, three = 3, four = 4,
+			eight = 8;// 0/1/2/3/4/8数字
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		// // 隐藏android系统的状态栏
+		// this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		// 隐藏应用程序的标题栏，即当前activity的标题栏
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_changepwd);
+		progressDialog = MyProgressDialog.createDialog(this);
+		context = this;
+		if (http == null) {
+			http = new HttpUtil(handler);
+		}
+		initview();
+
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		// 友盟统计
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		// 友盟统计
+		MobclickAgent.onPause(this);
+	}
+
+	private final Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			if (progressDialog != null && progressDialog.isShowing()) {
+				progressDialog.dismiss();// 关闭进度条
+			}
+			switch (msg.what) {
+			case HttpUtil.SUCCESS:
+				if (msg.arg1 == three) {
+					int status = -1;
+					CodeModel cm = JSON.parseObject(msg.obj.toString(),
+							CodeModel.class);
+					if (cm != null) {
+						status = cm.getStatus();
+						switch (status) {
+						case zero:
+							CommonToast.showShortToastMessage(context,
+									"修改密码成功,请重新登录！");
+							SharedPreferences preferences = context
+									.getSharedPreferences("user",
+											Context.MODE_PRIVATE);
+							Editor editor = preferences.edit();
+							editor.putString("pwd", "");
+							editor.commit();
+							HomePageActivity.context.finish();
+							Intent intent = new Intent(context,
+									LoginActivity.class);
+							context.startActivity(intent);
+							MyApplication.luserFriend.clear();
+							MyApplication.userModel = null;
+							MyApplication.isLogin = -1;
+
+							if (UserActivity.context != null) {
+								UserActivity.context.finish();
+							}
+							if (SetActivity.context != null) {
+								SetActivity.context.finish();
+							}
+							context.finish();
+							break;
+						case one:
+							CommonToast.showShortToastMessage(context,
+									"修改密码失败，失败原因：" + cm.getErrorMessage());
+							break;
+						case two:
+							CommonToast
+									.showShortToastMessage(context, RequestCode.NULL);
+							break;
+						default:
+							break;
+						}
+					}
+				}
+
+				break;
+			case HttpUtil.EMPTY:
+				// 返回数据为null
+				if (msg.arg1 == one) {
+					CommonToast
+							.showShortToastMessage(context, RequestCode.NULL);
+				}
+				if (msg.arg1 == two) {
+					CommonToast
+							.showShortToastMessage(context, RequestCode.NULL);
+				}
+				break;
+			case HttpUtil.FAILURE:
+				CommonToast.showShortToastMessage(context,
+						RequestCode.ERRORINFO);
+				break;
+			case HttpUtil.LOADING:
+
+				break;
+			default:
+				break;
+			}
+
+		}
+
+	};
+
+	/**
+	 * 初始化控件
+	 */
+	private void initview() {
+		back = (TextView) findViewById(R.id.back_tv);
+		back.setOnClickListener(this);
+		changepwd_sub = (TextView) findViewById(R.id.changepwd_sub);
+		changepwd_sub.setOnClickListener(this);
+		changepwd_old = (EditText) findViewById(R.id.changepwd_old);
+		changepwd_new = (EditText) findViewById(R.id.changepwd_new);
+		changepwd_re = (EditText) findViewById(R.id.changepwd_re);
+		base_back_lay = (LinearLayout) findViewById(R.id.base_back_lay);
+		base_back_lay.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v == base_back_lay) {
+			finish();
+		}
+		if (v == back) {
+			finish();
+		}
+		if (v == changepwd_sub) {
+			if (changepwd_old.getText().toString().trim() == null
+					|| changepwd_old.getText().toString().trim().equals("")) {
+				CommonToast.showShortToastMessage(context, "原始密码不能为空！");
+				return;
+			}
+			if (changepwd_new.getText().toString().trim() == null
+					|| changepwd_new.getText().toString().trim().equals("")) {
+				CommonToast.showShortToastMessage(context, "新设密码不能为空！");
+				return;
+			}
+			if (changepwd_re.getText().toString().trim() == null
+					|| changepwd_re.getText().toString().trim().equals("")) {
+				CommonToast.showShortToastMessage(context, "确认密码不能为空！");
+				return;
+			}
+			// if
+			// (MyApplication.isPWD(changepwd_old.getText().toString().trim()))
+			// {
+			// CommonToast.showShortToastMessage(context,
+			// "密码长度应6-16位数字、字母、下划线！");
+			// return;
+			// }
+			if (!MyApplication.isPWD(changepwd_new.getText().toString().trim())) {
+				CommonToast.showShortToastMessage(context,
+						"密码长度应6-16位数字、字母、下划线！");
+				return;
+			}
+			if (!MyApplication.isPWD(changepwd_re.getText().toString().trim())) {
+				CommonToast.showShortToastMessage(context,
+						"密码长度应6-16位数字、字母、下划线！");
+				return;
+			}
+			if (changepwd_old.getText().toString().trim()
+					.equals(changepwd_new.getText().toString().trim())) {
+				CommonToast.showShortToastMessage(context, "新设密码和输入的原始密码一致！");
+				return;
+			}
+			if (!changepwd_re.getText().toString().trim()
+					.equals(changepwd_new.getText().toString().trim())) {
+				CommonToast.showShortToastMessage(context, "新设密码和确认密码不一致！");
+				return;
+			}
+			AlertDialog.Builder normalDia = new AlertDialog.Builder(
+					ChangePwdActivity.this);
+			normalDia.setTitle("提示");
+			normalDia.setMessage("是否确认修改密码？");
+
+			normalDia.setPositiveButton("确定",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if (MyApplication.getNetObject().isNetConnected()) {
+								if (progressDialog != null
+										&& !progressDialog.isShowing()) {
+									progressDialog.setMessage("修改密码中...");
+									progressDialog.show();
+								}
+
+								String url = WebUrlConfig.updatePassword(
+										MyApplication.userModel.getUserID(),
+										LoginActivity.MD5(changepwd_old
+												.getText().toString().trim()),
+										LoginActivity.MD5(changepwd_new
+												.getText().toString().trim()));
+								http.sendGet(3, url);
+								dialog.dismiss();
+							} else {
+								CommonToast.showShortToastMessage(context,
+										RequestCode.NONETWORK);
+							}
+						}
+					});
+			normalDia.setNegativeButton("取消",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+			normalDia.create().show();
+
+		}
+	}
+
+}

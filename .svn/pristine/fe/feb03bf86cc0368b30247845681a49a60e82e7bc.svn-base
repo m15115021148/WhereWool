@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.saitu.na2ne"
+    android:versionCode="9"
+    android:versionName="2.1.5" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="21" />
+
+    <!-- 百度基础地图权限 -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <!-- 百度定位权限 -->
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    </uses-permission>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
+    </uses-permission>
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
+    </uses-permission>
+    <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 通讯录阅读权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 极光需要权限 -->
+    <!--
+    Required ⾃自定义⽤用来收发消息的相关权限 
+    <permission
+        android:name="com.saitu.na2ne.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.saitu.na2ne.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    -->
+    <!-- 友盟分享权限 start -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <!-- 友盟分享权限 end -->
+    <application
+        android:name="com.sitemap.na2ne.application.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/na2ne"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <!-- 第三方百度定位AK -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="s9zXx7UatE8FeOg4XsubeuYd" />
+        <!-- chenmeng：L4AhclWdIWKAlKDZvDIRFD6osY28aUzR -->
+        <!-- 张帆：s9zXx7UatE8FeOg4XsubeuYd -->
+        <!-- will： iwO0yU11IA8wkxGcqXkqAGFl -->
+        <!-- 正式版： sBiib150W29H9SP1BS9gTTie -->
+        <!-- activity -->
+        <activity
+            android:name="com.sitemap.na2ne.activities.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.HomePageActivity"
+            android:label="首页"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.LoginActivity"
+            android:label="登录页"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.LocationFriendListActivity"
+            android:label="定位记录好友列表页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.LocationDetailedListActivity"
+            android:label="定位记录明细列表页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.BillListActivity"
+            android:label="计费账单列表页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.RechargeActivity"
+            android:label="充值页面"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+        <!-- wechat sdk begin -->
+        <activity
+            android:name="com.saitu.na2ne.wxapi.WXPayEntryActivity"
+            android:exported="true" >
+        </activity>
+        <!-- wechat sdk end -->
+
+        <activity
+            android:name="com.sitemap.na2ne.activities.RechargeOldListActivity"
+            android:label="充值记录页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.RegisterPhoneActivity"
+            android:label="手机注册页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.RegisterSureActivity"
+            android:label="手机注册页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.RefundActivity"
+            android:label="申请退款页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.RefundOldListActivity"
+            android:label="退款列表页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.SetActivity"
+            android:label="设置页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.UserActivity"
+            android:label="用户资料"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.FriendListActivity"
+            android:label="联系人管理"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.FindPwdActivity"
+            android:label="找回密码页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.FindPwdSureActivity"
+            android:label="找回密码提交页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.AboutActivity"
+            android:label="关于页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.GongNengActivity"
+            android:label="功能页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.ChangePwdActivity"
+            android:label="修改页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.FriendInfoActivity"
+            android:label="好友信息页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.AddFriendPhoneActivity"
+            android:label="添加好友手机号页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.AddFriendPackageActivity"
+            android:label="添加好友手机号页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.AddFriendNameActivity"
+            android:label="添加好友名称页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.YiJianActivity"
+            android:label="意见与反馈页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.GongNengDetailedActivity"
+            android:label="问题详情页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.NotificationUpdateActivity"
+            android:label="更新下载"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomDialog" >
+        </activity>
+
+        <!-- service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:label="第三方定位服务"
+            android:process=":remote" >
+        </service>
+        <service
+            android:name="com.sitemap.na2ne.activities.DownloadService"
+            android:label="下载" >
+        </service>
+        <service
+            android:name="com.sitemap.na2ne.service.SubService"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="com.sitemap.na2ne.service.subService" />
+            </intent-filter>
+        </service>
+
+        <!-- alipay sdk begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- alipay sdk end -->
+
+        <activity
+            android:name="com.sitemap.na2ne.activities.WebViewActivity"
+            android:label="网页页面"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 友盟统计 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5694ca4b67e58e896b000f02" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="baidu" >
+        </meta-data>
+        <!-- 友盟分享 start -->
+        <!-- 友盟统计自定义页面 -->
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.UMDefault" />
+        <!-- 微信平台 -->
+        <activity
+            android:name="com.saitu.na2ne.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- QQ -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+               <!-- 友盟分享 end -->
+        <!--
+        极光推送
+ 
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.saitu.na2ne" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+ 
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.saitu.na2ne" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter android:priority="1000" >
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+              
+                <category android:name="com.saitu.na2ne" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+          
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+       
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+       
+        <receiver
+            android:name="com.sitemap.na2ne.activities.MyReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+			
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+              
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> 
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> 
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
+             
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                
+                <category android:name="com.saitu.na2ne" />
+            </intent-filter>
+        </receiver>
+       
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="896aa460386f7e51281c8b63" />
+
+        -->
+        <activity android:name="com.sitemap.na2ne.activities.MessageListActivity" >
+        </activity>
+        <activity
+            android:name="com.sitemap.na2ne.activities.MessageWebViewActivity"
+             >
+        </activity>
+    </application>
+
+</manifest>

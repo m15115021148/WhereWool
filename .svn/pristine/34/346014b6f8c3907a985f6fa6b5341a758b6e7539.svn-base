@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 添加好友手机输入页面 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     android:background="@color/huia"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:background="@color/white"
+        android:padding="@dimen/_15px_in720p" >
+
+        <LinearLayout
+            android:id="@+id/base_back_lay"
+           android:layout_width="@dimen/_80px_in720p"
+            android:layout_height="@dimen/_80px_in720p"
+            android:layout_centerVertical="true"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/back_tv"
+                android:layout_width="@dimen/_32px_in720p"
+                android:layout_height="@dimen/_32px_in720p"
+                android:background="@drawable/my_03" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="添加被定位号码"
+            android:textColor="@color/ghei"
+            android:textSize="@dimen/_36px_in720p" />
+    </RelativeLayout>
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+       android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_30px_in720p"
+        android:background="@drawable/login_shape"
+        android:gravity="center_vertical"
+        android:padding="@dimen/_10px_in720p" >
+
+        <ImageView
+            android:id="@+id/phoneimg"
+            android:layout_width="@dimen/_30px_in720p"
+            android:layout_height="@dimen/_30px_in720p"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5px_in720p"
+            android:src="@drawable/addfriend_phone" />
+
+        <EditText
+            android:id="@+id/addfriend_num_ed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="请输入需定位的号码"
+            android:layout_centerVertical="true"
+            android:inputType="phone"
+            android:layout_marginRight="@dimen/_60px_in720p"
+            android:textColor="#333333"
+            android:layout_toRightOf="@+id/phoneimg"
+            android:textSize="@dimen/_30px_in720p" />
+
+        <TextView
+            android:id="@+id/tongxunlu"
+            android:layout_width="@dimen/_50px_in720p"
+            android:layout_height="@dimen/_50px_in720p"
+            android:layout_alignParentRight="true"
+           android:background="@drawable/tongxunlu" />
+   
+</RelativeLayout>
+    <TextView
+        android:id="@+id/phone_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80px_in720p"
+        android:layout_marginLeft="@dimen/_30px_in720p"
+        android:layout_marginRight="@dimen/_30px_in720p"
+        android:layout_marginTop="@dimen/_60px_in720p"
+        android:background="@drawable/bg_blue"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_35px_in720p" />
+
+</LinearLayout>
